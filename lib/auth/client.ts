@@ -2,7 +2,7 @@ import { createAuthClient } from "better-auth/react"; // make sure to import fro
 
 import { env } from "@/env.mjs";
 
-export const authClient = createAuthClient({
+export const { useSession } = createAuthClient({
   //you can pass client configuration here
   baseURL: env.NEXT_PUBLIC_APP_URL,
 });
