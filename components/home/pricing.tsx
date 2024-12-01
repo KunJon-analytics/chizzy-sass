@@ -57,9 +57,9 @@ const Pricing = () => {
   return (
     <Section>
       <Container className="flex flex-col items-center gap-4 text-center">
-        <h2 className="!my-0 text-3xl">Pricing</h2>
+        <h2 className="!my-0 text-3xl">Our Investment Plans</h2>
         <p className="text-lg opacity-70 md:text-2xl">
-          <Balancer>Select the plan that best suits your needs.</Balancer>
+          <Balancer>The plans we offer is specifically made for you.</Balancer>
         </p>
 
         <div className="not-prose mt-4 grid grid-cols-1 gap-6 min-[850px]:grid-cols-3">
