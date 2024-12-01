@@ -1,64 +1,61 @@
-import { Coins } from "lucide-react";
-import React from "react";
-import Balancer from "react-wrap-balancer";
+import Link from "next/link";
 
-import { Section, Container } from "@/components/ui/craft";
+import type { ValidIcon } from "@/components/icons";
+import {
+  CardContainer,
+  CardFeature,
+  CardHeader,
+  CardIcon,
+  CardTitle,
+} from "@/components/marketing/card";
+import { Button } from "../ui/button";
 
-type FeatureText = {
-  icon: JSX.Element;
-  title: string;
+const features: {
+  icon: ValidIcon;
+  catchline: string;
   description: string;
-};
-
-const featureText: FeatureText[] = [
+}[] = [
   {
-    icon: <Coins className="h-6 w-6" />,
-    title: "Lorem Ipsum",
+    icon: "gauge",
+    catchline: "Speed Test",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Enter your URL and get a website speed check. Get insights on page load, header details and timing phases (DNS, Connect, TLS, TTFB, Transfer) of the response.",
   },
   {
-    icon: <Coins className="h-6 w-6" />,
-    title: "Lorem Ipsum",
+    icon: "globe",
+    catchline: "Global Latency",
     description:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "Monitor performance in different regions to ensure quick load times for users across 35 regions around the world.",
   },
   {
-    icon: <Coins className="h-6 w-6" />,
-    title: "Lorem Ipsum",
+    icon: "link",
+    catchline: "Share the Results",
     description:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Quickly share the results of your website speed test with your team or clients. The results expire after 7 days, so you can easily collaborate on performance.",
   },
 ];
-
 const Feature = () => {
   return (
-    <Section className="border-b">
-      <Container className="not-prose">
-        <div className="flex flex-col gap-6">
-          <h3 className="text-4xl">
-            <Balancer>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit
-            </Balancer>
-          </h3>
-          <h4 className="text-2xl font-light opacity-70">
-            <Balancer>
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua
-            </Balancer>
-          </h4>
-
-          <div className="mt-6 grid gap-6 md:mt-12 md:grid-cols-3">
-            {featureText.map(({ icon, title, description }, index) => (
-              <div className="flex flex-col gap-4" key={index}>
-                {icon}
-                <h4 className="text-xl text-primary">{title}</h4>
-                <p className="text-base opacity-75">{description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </Section>
+    <CardContainer>
+      <CardHeader>
+        <CardIcon icon="activity" />
+        <CardTitle>Start monitoring your services</CardTitle>
+      </CardHeader>
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+        {features?.map((feature, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+          <CardFeature key={i} {...feature} />
+        ))}
+      </ul>
+      <div className="order-first flex items-center justify-center gap-2 text-center md:order-none">
+        <Button variant="outline" className="rounded-full" asChild>
+          <Link href="/features/status-page">Status Page</Link>
+        </Button>
+        <Button className="rounded-full" asChild>
+          <Link href="/features/monitoring">Monitoring</Link>
+        </Button>
+      </div>
+    </CardContainer>
   );
 };
 
