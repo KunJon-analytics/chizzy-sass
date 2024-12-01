@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 
 const Hero = () => {
   return (
-    <Section className="relative backdrop-blur-sm">
+    <Section className="relative backdrop-blur-sm py-2">
       <Container className="flex flex-col gap-8">
         <Badge className="w-fit" variant="outline">
           <Link
