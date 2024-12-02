@@ -3,7 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 
 import prisma from "../prisma";
-import { sendVerificationEmail } from "../emails";
+import { sendForgotPasswordEmail, sendVerificationEmail } from "../emails";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -25,6 +25,9 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: true,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendForgotPasswordEmail(url, user.email);
+    },
   },
   plugins: [nextCookies()], // make sure this is the last plugin in the array
   emailVerification: {

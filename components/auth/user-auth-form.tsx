@@ -71,7 +71,7 @@ export function UserAuthForm() {
               },
               onError({ error }) {
                 toast.error(error.message);
-                console.log(error);
+                console.error(error);
               },
             },
           });
@@ -91,13 +91,15 @@ export function UserAuthForm() {
                   toast.error("Please verify your email address");
                 }
                 toast.error(error.message);
-                console.log(error);
+                console.error(error);
               },
             },
           });
         }
       } catch (_e) {
         // TODO: better error handling, including e.g. toast
+        console.error(_e);
+        toast.error("Something went wrong");
         form.setError("root", { message: "Something went wrong" });
       }
     });
