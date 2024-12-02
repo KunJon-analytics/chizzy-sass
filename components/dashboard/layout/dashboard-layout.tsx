@@ -1,11 +1,19 @@
 import React from "react";
 
-import AppHeader from "./app-header";
+import AppHeader, { type AppHeaderProps } from "./app-header";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+type DashboardLayoutProps = {
+  children: React.ReactNode;
+  appHeaderProps: AppHeaderProps;
+};
+
+const DashboardLayout = ({
+  children,
+  appHeaderProps,
+}: DashboardLayoutProps) => {
   return (
     <>
-      <AppHeader />
+      <AppHeader {...appHeaderProps} />
       {children}
     </>
   );

@@ -84,12 +84,15 @@ model Verification {
 }
 
 model Investment {
-  id          String  @id @default(uuid())
-  tranche     Tranche @relation(fields: [trancheId], references: [id])
+  id          String           @id @default(uuid())
+  tranche     Tranche          @relation(fields: [trancheId], references: [id])
   trancheId   String
   dailyProfit Float
-  user        User    @relation(fields: [userId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
   userId      String
+  status      InvestmentStatus @default(PENDING)
+  started     DateTime?
+  ended       DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,4 +117,10 @@ model Referral {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum InvestmentStatus {
+  PENDING
+  CANCELLED
+  CONFIRMED
 }

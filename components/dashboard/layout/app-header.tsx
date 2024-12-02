@@ -11,7 +11,17 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
-const AppHeader = () => {
+type BreadcrumbLinkparam = { link: string; title: string };
+
+export type AppHeaderProps = {
+  primaryBreadcrumb: BreadcrumbLinkparam;
+  secondaryBreadcrumb?: string;
+};
+
+const AppHeader = ({
+  primaryBreadcrumb,
+  secondaryBreadcrumb,
+}: AppHeaderProps) => {
   return (
     <header className="flex h-16 shrink-0 items-center gap-2">
       <div className="flex items-center gap-2 px-4">
@@ -20,14 +30,18 @@ const AppHeader = () => {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem className="hidden md:block">
-              <BreadcrumbLink href="#">
-                Building Your Application
+              <BreadcrumbLink href={primaryBreadcrumb.link}>
+                {primaryBreadcrumb.title}
               </BreadcrumbLink>
             </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
+            {secondaryBreadcrumb && (
+              <>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{secondaryBreadcrumb}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </>
+            )}
           </BreadcrumbList>
         </Breadcrumb>
       </div>

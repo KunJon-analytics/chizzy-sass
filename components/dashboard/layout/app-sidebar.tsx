@@ -34,7 +34,12 @@ const data = {
       url: "/dashboard",
       icon: LayoutDashboard,
       isActive: true,
-      items: [],
+      items: [
+        {
+          title: "Overview",
+          url: "/dashboard/overview",
+        },
+      ],
     },
     {
       title: "Transactions",
