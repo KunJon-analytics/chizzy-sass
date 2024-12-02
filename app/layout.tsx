@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -45,9 +46,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div vaul-drawer-wrapper="" className="bg-background">
-            {children}
-          </div>
+          <NuqsAdapter>
+            <div vaul-drawer-wrapper="" className="bg-background">
+              {children}
+            </div>
+          </NuqsAdapter>
           <Toaster richColors closeButton />
         </ThemeProvider>
       </body>

@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 
 import prisma from "../prisma";
+import { sendVerificationEmail } from "../emails";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -16,12 +17,23 @@ export const auth = betterAuth({
       referredById: {
         type: "string",
         required: false,
-        input: true, // allow user to set role
+        input: true, // allow user to set referredById
       },
     },
   },
   emailAndPassword: {
     enabled: true,
+    autoSignIn: true,
+    requireEmailVerification: true,
   },
   plugins: [nextCookies()], // make sure this is the last plugin in the array
+  emailVerification: {
+    sendOnSignUp: true, // Automatically sends a verification email at signup
+    autoSignInAfterVerification: true, // Automatically signIn the user after verification
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendVerificationEmail(url, user.email);
+    },
+  },
 });
+
+export type Session = typeof auth.$Infer.Session;
