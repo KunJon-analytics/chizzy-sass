@@ -82,7 +82,7 @@ export function UserAuthForm() {
             callbackURL,
             fetchOptions: {
               onSuccess: () => {
-                toast.success("LoggedIn successfully");
+                toast.success("Logged In successfully");
                 router.replace(callbackURL);
               },
               onError({ error }) {

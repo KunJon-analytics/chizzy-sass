@@ -21,5 +21,5 @@ export default async function authMiddleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboardss/:path*"],
+  matcher: ["/dashboard/:path*"],
 };
