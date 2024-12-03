@@ -66,15 +66,11 @@ const data = {
       items: [
         {
           title: "Account",
-          url: "/dashboard/account",
+          url: "/dashboard/settings/account",
         },
         {
-          title: "Theme",
-          url: "/dashboard/theme",
-        },
-        {
-          title: "Billing",
-          url: "/dashboard/billing",
+          title: "Appearance",
+          url: "/dashboard/settings/appearance",
         },
       ],
     },
