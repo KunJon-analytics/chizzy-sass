@@ -9,3 +9,10 @@ export function numberFormatter(value: number) {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return formatter.format(value);
 }
+
+export function formatCurrency(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(value);
+}
