@@ -104,6 +104,7 @@ model Tranche {
   id                  String       @id @default(uuid())
   name                String
   fee                 Float
+  cooldownInterval    Int
   dailyProfitIncrease Float
   investments         Investment[]
 
@@ -112,10 +113,11 @@ model Tranche {
 }
 
 model Transaction {
-  id           String          @id
+  id           String            @id
   type         TransactionType
+  status       TransactionStatus @default(PENDING)
   investmentId String
-  investment   Investment      @relation(fields: [investmentId], references: [id])
+  investment   Investment        @relation(fields: [investmentId], references: [id])
   amount       Float
 
   createdAt DateTime @default(now())

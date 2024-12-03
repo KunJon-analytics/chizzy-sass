@@ -7,11 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AreaGraph } from "./area-graph";
-import { BarGraph } from "./bar-graph";
-import { PieGraph } from "./pie-graph";
 import { RecentSales } from "./recent-sales";
 import StatsContainer from "./stats-container";
+import PieGraphContainer from "./pie-graph-container";
 
 export default function OverViewPage() {
   return (
@@ -32,9 +30,7 @@ export default function OverViewPage() {
           <TabsContent value="overview" className="space-y-4">
             <StatsContainer />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <div className="col-span-4">
-                <BarGraph />
-              </div>
+              <PieGraphContainer />
               <Card className="col-span-4 md:col-span-3">
                 <CardHeader>
                   <CardTitle>Recent Transactions</CardTitle>
@@ -46,12 +42,6 @@ export default function OverViewPage() {
                   <RecentSales />
                 </CardContent>
               </Card>
-              <div className="col-span-4">
-                <AreaGraph />
-              </div>
-              <div className="col-span-4 md:col-span-3">
-                <PieGraph />
-              </div>
             </div>
           </TabsContent>
         </Tabs>

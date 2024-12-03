@@ -2,7 +2,13 @@ import { unstable_cache } from "next/cache";
 import { differenceInDays } from "date-fns";
 
 import prisma from "../prisma";
-import { defaultUserStats, GetUserStats } from "../validations/user";
+import {
+  defaultChartData,
+  defaultUserStats,
+  getTxType,
+  GetUserStats,
+  UserChartData,
+} from "../validations/user";
 
 const getUserStats = async (id: string): Promise<GetUserStats> => {
   try {
@@ -54,11 +60,32 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
       initialValue
     );
 
+    const groupTransactions = await prisma.transaction.groupBy({
+      by: ["type"],
+      where: {
+        investment: {
+          userId: id,
+        },
+      },
+      _sum: {
+        amount: true,
+      },
+    });
+
+    const chartData: UserChartData = defaultChartData.map((defaultData) => {
+      const value =
+        groupTransactions.find(
+          (x) => getTxType(x.type) === defaultData.transactionType
+        )?._sum.amount || 0;
+      return { ...defaultData, value };
+    });
+
     return {
       ...rewardValue,
       noOftxs: userDetails.investments.length,
       investmentPlan,
       referrals: userDetails._count.referrals,
+      chartData,
     };
   } catch (error) {
     console.log("GET_USER_STATS", error);
@@ -69,5 +96,5 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
 export const getCachedUserStats = unstable_cache(
   async (userId: string) => getUserStats(userId),
   ["user-stats"],
-  { revalidate: 3600 }
+  { revalidate: 80000 }
 );
