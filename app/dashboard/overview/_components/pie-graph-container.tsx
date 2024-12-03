@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
 import { getCachedUserStats } from "@/lib/services/user";
 import { PieGraph } from "./pie-graph";
+import NoTransactionsCard from "./no-transactions-card";
 
 const PieGraphContainer = async () => {
   const session = await auth.api.getSession({
@@ -16,6 +17,12 @@ const PieGraphContainer = async () => {
   }
 
   const { chartData } = await getCachedUserStats(session.user.id);
+
+  const totalValue = chartData.reduce((acc, curr) => acc + curr.value, 0);
+
+  if (totalValue === 0) {
+    return <NoTransactionsCard className="col-span-4" />;
+  }
 
   return (
     <div className="col-span-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { AlertTriangle, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { Label, Pie, PieChart } from "recharts";
 import Link from "next/link";
 
@@ -20,7 +20,6 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { UserChartData } from "@/lib/validations/user";
-import { Button } from "@/components/ui/button";
 
 const chartConfig = {
   value: {
@@ -54,73 +53,54 @@ export function PieGraph({ chartData }: { chartData: UserChartData }) {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        {totalValue > 0 ? (
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[360px]"
-          >
-            <PieChart>
-              <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-              />
-              <Pie
-                data={chartData}
-                dataKey="value"
-                nameKey="transactionType"
-                innerRadius={60}
-                strokeWidth={5}
-              >
-                <Label
-                  content={({ viewBox }) => {
-                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                      return (
-                        <text
+        <ChartContainer
+          config={chartConfig}
+          className="mx-auto aspect-square max-h-[360px]"
+        >
+          <PieChart>
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="transactionType"
+              innerRadius={60}
+              strokeWidth={5}
+            >
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        textAnchor="middle"
+                        dominantBaseline="middle"
+                      >
+                        <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
+                          className="fill-foreground text-3xl font-bold"
                         >
-                          <tspan
-                            x={viewBox.cx}
-                            y={viewBox.cy}
-                            className="fill-foreground text-3xl font-bold"
-                          >
-                            {totalValue.toLocaleString()}
-                          </tspan>
-                          <tspan
-                            x={viewBox.cx}
-                            y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
-                          >
-                            Value
-                          </tspan>
-                        </text>
-                      );
-                    }
-                  }}
-                />
-              </Pie>
-            </PieChart>
-          </ChartContainer>
-        ) : (
-          <div className="mx-auto aspect-square max-h-[300px]">
-            <div className="flex mt-4 items-center space-x-4 rounded-md border p-4">
-              <AlertTriangle />
-              <div className="flex-1 space-y-1">
-                <p className="text-sm font-medium leading-none">
-                  Start Investing Today!
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  Join our investment platform and start earning today.
-                </p>
-              </div>
-              <Button asChild>
-                <Link href={"/dashboard/billing"}>Invest Now</Link>
-              </Button>
-            </div>
-          </div>
-        )}
+                          {totalValue.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          Value
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </Pie>
+          </PieChart>
+        </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="font-medium leading-none">

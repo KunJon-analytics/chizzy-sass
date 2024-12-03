@@ -1,15 +1,8 @@
 import PageContainer from "@/components/dashboard/page-container";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RecentSales } from "./recent-sales";
 import StatsContainer from "./stats-container";
 import PieGraphContainer from "./pie-graph-container";
+import { RecentTransactionsCard } from "./recent-transactions";
 
 export default function OverViewPage() {
   return (
@@ -31,17 +24,7 @@ export default function OverViewPage() {
             <StatsContainer />
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
               <PieGraphContainer />
-              <Card className="col-span-4 md:col-span-3">
-                <CardHeader>
-                  <CardTitle>Recent Transactions</CardTitle>
-                  <CardDescription>
-                    You made 265 transactions this month.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
-              </Card>
+              <RecentTransactionsCard />
             </div>
           </TabsContent>
         </Tabs>
