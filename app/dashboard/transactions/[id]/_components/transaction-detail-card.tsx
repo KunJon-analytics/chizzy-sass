@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
@@ -10,15 +11,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { TransactionsPayload } from "@/lib/validations/transaction";
 import { getStatusIcon, getTransactionType } from "@/lib/utils/transactions";
 import { formatCurrency } from "@/lib/utils";
+import { getCachedTransaction } from "@/lib/services/transactions";
 
-const TransactionDetailCard = ({
-  transaction,
+const TransactionDetailCard = async ({
+  transactionId,
 }: {
-  transaction: TransactionsPayload;
+  transactionId: string;
 }) => {
+  const transaction = await getCachedTransaction(transactionId);
+
+  if (!transaction) {
+    notFound();
+  }
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>

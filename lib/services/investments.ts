@@ -17,8 +17,31 @@ export const getUserInvestments = async (userId: string) => {
   }
 };
 
+export const getUserInvestmentDetail = async (userId: string, id: string) => {
+  try {
+    return prisma.investment.findUnique({
+      where: { id, userId },
+      include: {
+        transactions: {
+          include: { investment: { include: { tranche: true } } },
+        },
+        tranche: true,
+      },
+    });
+  } catch (error) {
+    console.log("GET_USER_INVESTMENT_DETAIL", error);
+    return null;
+  }
+};
+
 export const getCachedUserInvestments = unstable_cache(
   async (userId: string) => getUserInvestments(userId),
+  ["user-investments"],
+  { revalidate: 80000 }
+);
+
+export const getCachedUserInvestmentDetail = unstable_cache(
+  async (userId: string, id: string) => getUserInvestmentDetail(id, userId),
   ["user-investments"],
   { revalidate: 80000 }
 );

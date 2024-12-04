@@ -34,7 +34,10 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
       (accumulator, currentValue) => {
         const { dailyProfitIncrease, fee } = currentValue.tranche;
         const presentReward = currentValue.started
-          ? differenceInDays(new Date(), currentValue.started) *
+          ? differenceInDays(
+              currentValue.ended ?? new Date(),
+              currentValue.started
+            ) *
             dailyProfitIncrease *
             fee
           : 0;
@@ -66,6 +69,7 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
         investment: {
           userId: id,
         },
+        status: "CONFIRMED",
       },
       _sum: {
         amount: true,

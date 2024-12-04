@@ -1,7 +1,4 @@
-import { notFound } from "next/navigation";
-
 import DashboardLayout from "@/components/dashboard/layout/dashboard-layout";
-import { getCachedTransaction } from "@/lib/services/transactions";
 import TransactionDetailCard from "./_components/transaction-detail-card";
 
 export default async function TransactionDetailPage({
@@ -9,12 +6,6 @@ export default async function TransactionDetailPage({
 }: {
   params: { id: string };
 }) {
-  const transaction = await getCachedTransaction(params.id);
-
-  if (!transaction) {
-    notFound();
-  }
-
   return (
     <DashboardLayout
       appHeaderProps={{
@@ -31,7 +22,7 @@ export default async function TransactionDetailPage({
             Transaction Receipt 🧾
           </h2>
         </div>
-        <TransactionDetailCard transaction={transaction} />
+        <TransactionDetailCard transactionId={params.id} />
       </div>
     </DashboardLayout>
   );

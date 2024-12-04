@@ -7,6 +7,13 @@ export type InvestmentsPayload = Prisma.InvestmentGetPayload<{
   };
 }>;
 
+export type InvestmentDetailPayload = Prisma.InvestmentGetPayload<{
+  include: {
+    transactions: { include: { investment: { include: { tranche: true } } } };
+    tranche: true;
+  };
+}>;
+
 export type InvestmentTab = "all" | keyof typeof $Enums.InvestmentStatus;
 
 export const getStatusColor = (status: $Enums.InvestmentStatus) => {
