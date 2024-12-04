@@ -5,11 +5,11 @@ import { $Enums } from "@prisma/client";
 export const getStatusIcon = (status: $Enums.TransactionStatus) => {
   switch (status) {
     case "CONFIRMED":
-      return <CheckCircle className="h-4 w-4 text-green-500" />;
+      return <CheckCircle className="h-4 w-4 text-success-foreground" />;
     case "PENDING":
-      return <AlertCircle className="h-4 w-4 text-yellow-500" />;
+      return <AlertCircle className="h-4 w-4 text-warning-foreground" />;
     case "FAILED":
-      return <XCircle className="h-4 w-4 text-red-500" />;
+      return <XCircle className="h-4 w-4 text-destructive-foreground" />;
     default:
       return null;
   }
@@ -18,11 +18,11 @@ export const getStatusIcon = (status: $Enums.TransactionStatus) => {
 export const getStatusColor = (status: $Enums.TransactionStatus) => {
   switch (status) {
     case "CONFIRMED":
-      return "bg-green-100 text-green-800";
+      return "bg-success text-success-foreground";
     case "PENDING":
-      return "bg-yellow-100 text-yellow-800";
+      return "bg-warning text-warning-foreground";
     case "FAILED":
-      return "bg-red-100 text-red-800";
+      return "bg-destructive text-destructive-foreground";
     default:
       return "bg-gray-100 text-gray-800";
   }
