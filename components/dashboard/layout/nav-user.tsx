@@ -110,9 +110,7 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => router.push("/dashboard/billing")}
-              >
+              <DropdownMenuItem onClick={() => router.push("/dashboard/plans")}>
                 <Sparkles />
                 Upgrade to Pro
               </DropdownMenuItem>
@@ -120,16 +118,16 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem
-                onClick={() => router.push("/dashboard/account")}
+                onClick={() => router.push("/dashboard/settings/account")}
               >
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => router.push("/dashboard/billing")}
+                onClick={() => router.push("/dashboard/investments")}
               >
                 <CreditCard />
-                Billing
+                Investments
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => toast.info("You have no notifications")}

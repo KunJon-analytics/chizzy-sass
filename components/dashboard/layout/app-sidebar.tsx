@@ -48,8 +48,8 @@ const data = {
       items: [],
     },
     {
-      title: "Rewards",
-      url: "/dashboard/rewards",
+      title: "Investments",
+      url: "/dashboard/investments",
       icon: Coins,
       items: [],
     },
