@@ -27,3 +27,16 @@ export const getStatusColor = (status: $Enums.TransactionStatus) => {
       return "bg-gray-100 text-gray-800";
   }
 };
+
+export const getTransactionType = (type: $Enums.TransactionType) => {
+  switch (type) {
+    case "CLAIM_REWARD":
+      return "Earnings Claim";
+    case "DEPOSIT":
+      return "Deposit";
+    case "WITHDRAWAL":
+      return "Withdrawal";
+    default:
+      return "";
+  }
+};
