@@ -24,7 +24,7 @@ export default function NoTransactionsCard({
       </CardContent>
       <CardFooter className="flex justify-center pb-6">
         <Button asChild>
-          <Link href={"/dashboard/billings"}>Start Investing</Link>
+          <Link href={"/dashboard/plans"}>Start Investing</Link>
         </Button>
       </CardFooter>
     </Card>

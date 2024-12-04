@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
 
 import DashboardLayout from "@/components/dashboard/layout/dashboard-layout";
-import PageContainer from "@/components/dashboard/page-container";
 import { getCachedTransaction } from "@/lib/services/transactions";
 import TransactionDetailCard from "./_components/transaction-detail-card";
 
@@ -26,16 +25,14 @@ export default async function TransactionDetailPage({
         secondaryBreadcrumb: `${params.id.substring(0, 7)}`,
       }}
     >
-      <PageContainer scrollable>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-2xl font-bold tracking-tight">
-              Transaction Receipt 🧾
-            </h2>
-          </div>
-          <TransactionDetailCard transaction={transaction} />
+      <div className="space-y-2">
+        <div className="flex items-center justify-between space-y-2">
+          <h2 className="text-2xl font-bold tracking-tight">
+            Transaction Receipt 🧾
+          </h2>
         </div>
-      </PageContainer>
+        <TransactionDetailCard transaction={transaction} />
+      </div>
     </DashboardLayout>
   );
 }

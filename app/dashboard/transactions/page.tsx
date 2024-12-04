@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 import DashboardLayout from "@/components/dashboard/layout/dashboard-layout";
-import PageContainer from "@/components/dashboard/page-container";
 import { auth } from "@/lib/auth";
 import { getCachedUserTransactions } from "@/lib/services/transactions";
 import { TransactionTable } from "./_components/transaction-table";
@@ -30,20 +29,18 @@ const TransactionsPage = async () => {
         secondaryBreadcrumb: "Transactions",
       }}
     >
-      <PageContainer scrollable>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between space-y-2">
-            <h2 className="text-2xl font-bold tracking-tight">
-              Your Transactions ⇆
-            </h2>
-          </div>
-          {data.length === 0 ? (
-            <NoTransactionsCard className="!mt-16" />
-          ) : (
-            <TransactionTable data={data} />
-          )}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between space-y-2">
+          <h2 className="text-2xl font-bold tracking-tight">
+            Your Transactions ⇆
+          </h2>
         </div>
-      </PageContainer>
+        {data.length === 0 ? (
+          <NoTransactionsCard className="!mt-16" />
+        ) : (
+          <TransactionTable data={data} />
+        )}
+      </div>
     </DashboardLayout>
   );
 };
