@@ -1,40 +1,12 @@
-export type Transaction = {
-  id: string;
-  status: "completed" | "pending" | "failed";
-  type: "deposit" | "withdrawal" | "transfer";
-  amount: number;
-  investmentName: string;
-  investmentId: string;
-  createdAt: string;
-};
-
-export const transactions: Transaction[] = [
+export const investmentTranches = [
+  // READ!!!! make sure you change site config default tranche when you make changes here
+  { name: "Basic", fee: 50, cooldownInterval: 7, dailyProfitIncrease: 0.5 },
+  { name: "Silver", fee: 100, cooldownInterval: 14, dailyProfitIncrease: 1.0 },
+  { name: "Gold", fee: 250, cooldownInterval: 30, dailyProfitIncrease: 1.5 },
   {
-    id: "1",
-    status: "completed",
-    type: "deposit",
-    amount: 1000,
-    investmentName: "Tech Growth Fund",
-    investmentId: "TGF001",
-    createdAt: "2023-06-01T10:00:00Z",
+    name: "Platinum",
+    fee: 500,
+    cooldownInterval: 60,
+    dailyProfitIncrease: 2.0,
   },
-  {
-    id: "2",
-    status: "pending",
-    type: "withdrawal",
-    amount: 500,
-    investmentName: "Real Estate Trust",
-    investmentId: "RET002",
-    createdAt: "2023-06-02T14:30:00Z",
-  },
-  {
-    id: "3",
-    status: "failed",
-    type: "transfer",
-    amount: 750,
-    investmentName: "Green Energy ETF",
-    investmentId: "GEE003",
-    createdAt: "2023-06-03T09:15:00Z",
-  },
-  // Add more mock data as needed
 ];

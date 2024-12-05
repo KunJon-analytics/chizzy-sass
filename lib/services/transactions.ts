@@ -2,7 +2,7 @@ import { unstable_cache } from "next/cache";
 
 import prisma from "../prisma";
 
-export const getUserTransactions = async (userId: string) => {
+const getUserTransactions = async (userId: string) => {
   try {
     return prisma.transaction.findMany({
       where: { investment: { userId } },
@@ -18,7 +18,7 @@ export const getUserTransactions = async (userId: string) => {
   }
 };
 
-export const getTransaction = async (id: string) => {
+const getTransaction = async (id: string) => {
   try {
     return prisma.transaction.findUnique({
       where: { id },

@@ -8,6 +8,7 @@ export const env = createEnv({
     BETTER_AUTH_SECRET: z.string().min(1),
     CMC_PRO_API_KEY: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    NOW_PAYMENT_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
@@ -19,6 +20,7 @@ export const env = createEnv({
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     CMC_PRO_API_KEY: process.env.CMC_PRO_API_KEY,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    NOW_PAYMENT_API_KEY: process.env.NOW_PAYMENT_API_KEY,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_RESEND_FROM_EMAIL: process.env.NEXT_PUBLIC_RESEND_FROM_EMAIL,
   },
