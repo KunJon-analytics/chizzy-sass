@@ -10,6 +10,7 @@ const getUserInvestments = async (userId: string) => {
         _count: { select: { transactions: true } },
         tranche: { select: { name: true, fee: true } },
       },
+      orderBy: { updatedAt: "desc" },
     });
   } catch (error) {
     console.log("GET_USER_INVESTMENTS", error);
@@ -24,7 +25,9 @@ const getUserInvestmentDetail = async (userId: string, id: string) => {
       include: {
         transactions: {
           include: { investment: { include: { tranche: true } } },
+          orderBy: { updatedAt: "desc" },
         },
+        user: { select: { evmwalletAddress: true } },
         tranche: true,
       },
     });

@@ -7,6 +7,7 @@ export type GetUserStats = {
   totalRewards: number;
   referrals: number;
   investmentPlan?: string;
+  walletaddress?: string | null;
   chartData: UserChartData;
 };
 

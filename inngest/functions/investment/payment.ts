@@ -25,7 +25,7 @@ export const confirmDeposit = inngest.createFunction(
     const ok = await step.run("get-api-status", async () => {
       const apiStatusResponse: AxiosResponse<{ message: string }> =
         await nowPaymentClient.get("/status");
-      return apiStatusResponse.data.message !== "OK";
+      return apiStatusResponse.data.message === "OK";
     });
 
     if (!ok) {

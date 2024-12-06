@@ -14,19 +14,21 @@ const CancelPlanForm = ({ investmentId: id }: CancelPlanFormProps) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     startTransition(async () => {
       try {
         const { error, success } = await cancelInvestment({ id });
-        console.log({ error, success });
-        if (error) {
-          toast.error(error);
-          return;
-        }
-        if (success) {
-          toast.success(`Investment was successfully cancelled`);
-        }
-        router.refresh();
+        startTransition(() => {
+          console.log({ error, success });
+          if (error) {
+            toast.error(error);
+            return;
+          }
+          if (success) {
+            toast.success(`Investment was successfully cancelled`);
+          }
+          router.refresh();
+        });
       } catch (error) {
         console.error(error);
         toast.error("Network error");
@@ -34,11 +36,14 @@ const CancelPlanForm = ({ investmentId: id }: CancelPlanFormProps) => {
     });
   };
   return (
-    <form onSubmit={onSubmit}>
-      <Button variant="destructive" type="submit" disabled={isPending}>
-        {isPending ? <LoadingAnimation /> : "Cancel Plan"}
-      </Button>
-    </form>
+    <Button
+      variant="destructive"
+      type="submit"
+      onClick={onSubmit}
+      disabled={isPending}
+    >
+      {isPending ? <LoadingAnimation /> : "Cancel Plan"}
+    </Button>
   );
 };
 

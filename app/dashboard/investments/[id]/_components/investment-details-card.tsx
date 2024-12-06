@@ -15,6 +15,7 @@ import {
 } from "@/lib/validations/investment";
 import { Button } from "@/components/ui/button";
 import CancelPlanForm from "./cancel-plan-form";
+import { EndPlanModal } from "./end-plan-form";
 
 type InvestmentDetailsCardParams = { investmentData: InvestmentDetailPayload };
 
@@ -24,6 +25,9 @@ const InvestmentDetailsCard = async ({
   const showPaymentTx = investmentData.transactions.find(
     (tx) => tx.status === "PENDING" && tx.type === "DEPOSIT"
   );
+
+  const showEndButton = investmentData.started && !investmentData.ended;
+
   return (
     <Card>
       <CardHeader>
@@ -69,19 +73,29 @@ const InvestmentDetailsCard = async ({
           </div>
         </dl>
       </CardContent>
-      {showPaymentTx && (
-        <CardFooter className="flex gap-4">
-          <Button asChild>
-            <Link
-              href={`https://nowpayments.io/payment/?iid=${showPaymentTx.txId}`}
-              target="_blank"
-            >
-              Make Payment
-            </Link>
-          </Button>
-          <CancelPlanForm investmentId={showPaymentTx.investmentId} />
-        </CardFooter>
-      )}
+      <CardFooter className="flex gap-4">
+        {showPaymentTx && (
+          <>
+            <Button asChild>
+              <Link
+                href={`https://nowpayments.io/payment/?iid=${showPaymentTx.txId}`}
+                target="_blank"
+              >
+                Make Payment
+              </Link>
+            </Button>
+            <CancelPlanForm investmentId={showPaymentTx.investmentId} />
+          </>
+        )}
+        {!!investmentData.user?.evmwalletAddress ? (
+          <EndPlanModal
+            currentWalletAddress={investmentData.user.evmwalletAddress}
+            investmentId={investmentData.id}
+          />
+        ) : (
+          "No Wallet"
+        )}
+      </CardFooter>
     </Card>
   );
 };

@@ -23,6 +23,7 @@ export type InvestmentDetailPayload = Prisma.InvestmentGetPayload<{
   include: {
     transactions: { include: { investment: { include: { tranche: true } } } };
     tranche: true;
+    user: { select: { evmwalletAddress: true } };
   };
 }>;
 

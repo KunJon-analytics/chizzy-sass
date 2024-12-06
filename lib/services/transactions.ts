@@ -6,6 +6,7 @@ const getUserTransactions = async (userId: string) => {
   try {
     return prisma.transaction.findMany({
       where: { investment: { userId } },
+      orderBy: { updatedAt: "desc" },
       include: {
         investment: {
           select: { id: true, tranche: { select: { name: true } } },

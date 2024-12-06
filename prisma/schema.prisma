@@ -14,13 +14,14 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  Session       Session[]
-  Account       Account[]
+  id               String    @id @default(cuid())
+  name             String
+  email            String
+  emailVerified    Boolean
+  image            String?
+  evmwalletAddress String?
+  Session          Session[]
+  Account          Account[]
 
   referrals    Referral[] @relation("Referrer")
   referredBy   Referral?  @relation("Referred")

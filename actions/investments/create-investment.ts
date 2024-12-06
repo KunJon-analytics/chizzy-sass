@@ -77,9 +77,9 @@ export const createInvestment = async (params: unknown) => {
       price_currency: "usd",
       order_id: createdTxId,
       order_description: `Invest in ${siteConfig.name} ${investmentTranche.name} Tranche`,
-      ipn_callback_url: `${siteConfig.url}/dashboard/deposits/${createdTxId}/callback`,
-      success_url: `${siteConfig.url}/dashboard/deposits/${createdTxId}/success`,
-      cancel_url: `${siteConfig.url}/dashboard/deposits/${createdTxId}/cancel`,
+      ipn_callback_url: `${siteConfig.url}/api/deposits/${createdTxId}/callback`,
+      success_url: `${siteConfig.url}/deposits/${createdTxId}/success`,
+      cancel_url: `${siteConfig.url}/deposits/${createdTxId}/cancel`,
     };
     const paymentResponse: NowInvoiceResponse = await nowPaymentClient.post(
       "/invoice",

@@ -18,17 +18,19 @@ export function InvestForm({ trancheId }: { trancheId: string }) {
     startTransition(async () => {
       try {
         const { error, success } = await createInvestment({ trancheId });
-        console.log({ error, success });
-        if (!!error) {
-          toast.error(error);
-        }
-        if (!!success) {
-          toast.success(
-            `Payment link generated successfully. Link: ${success}`
-          );
-          setPaymentLink(success);
-        }
-        router.refresh();
+        startTransition(() => {
+          console.log({ error, success });
+          if (!!error) {
+            toast.error(error);
+          }
+          if (!!success) {
+            toast.success(
+              `Payment link generated successfully. Link: ${success}`
+            );
+            setPaymentLink(success);
+            router.replace(success);
+          }
+        });
       } catch (error) {
         console.error(error);
         toast.error("Network error");
@@ -47,10 +49,13 @@ export function InvestForm({ trancheId }: { trancheId: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full">
-      <Button className="w-full" type="submit" disabled={isPending}>
-        {isPending ? <LoadingAnimation /> : "Invest Now"}
-      </Button>
-    </form>
+    <Button
+      className="w-full"
+      type="submit"
+      onClick={onSubmit}
+      disabled={isPending}
+    >
+      {isPending ? <LoadingAnimation /> : "Invest Now"}
+    </Button>
   );
 }

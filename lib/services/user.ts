@@ -22,6 +22,7 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
           },
           where: { status: "CONFIRMED" },
         },
+        evmwalletAddress: true,
         _count: { select: { referrals: true } },
       },
     });
@@ -102,6 +103,7 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
       investmentPlan,
       referrals: userDetails._count.referrals,
       chartData,
+      walletaddress: userDetails.evmwalletAddress,
     };
   } catch (error) {
     console.log("GET_USER_STATS", error);

@@ -42,7 +42,7 @@ export async function RecentTransactionsCard() {
       </CardHeader>
       <CardContent>
         <ul className="space-y-4">
-          {transactions.map((transaction) => (
+          {transactions.slice(0, 4).map((transaction) => (
             <li
               key={transaction.id}
               className="flex items-center justify-between p-4 rounded-lg"
