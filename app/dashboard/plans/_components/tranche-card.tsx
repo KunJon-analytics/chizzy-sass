@@ -17,6 +17,7 @@ interface TrancheCardProps {
   isCurrentTranche: boolean;
   isSuggestedPlan: boolean;
   activeInvestment: boolean;
+  pendingInvestment: boolean;
 }
 
 export function TrancheCard({
@@ -24,6 +25,7 @@ export function TrancheCard({
   isSuggestedPlan,
   activeInvestment,
   tranche,
+  pendingInvestment,
 }: TrancheCardProps) {
   const {
     cooldownInterval,
@@ -67,6 +69,14 @@ export function TrancheCard({
             className="w-full"
             variant={isCurrentTranche ? "outline" : "default"}
             disabled={activeInvestment}
+          >
+            {isCurrentTranche ? "Current Plan" : "Invest Now"}
+          </Button>
+        ) : pendingInvestment ? (
+          <Button
+            className="w-full"
+            variant={isCurrentTranche ? "outline" : "default"}
+            disabled={pendingInvestment}
           >
             {isCurrentTranche ? "Current Plan" : "Invest Now"}
           </Button>

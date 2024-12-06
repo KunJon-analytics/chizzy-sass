@@ -7,9 +7,9 @@ import {
   Command,
   LayoutDashboard,
   LifeBuoy,
-  Send,
   Settings2,
   Coins,
+  Sprout,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -77,14 +77,14 @@ const data = {
   ],
   navSecondary: [
     {
+      title: "Invest",
+      url: "/dashboard/plans",
+      icon: Sprout,
+    },
+    {
       title: "Support",
       url: "#",
       icon: LifeBuoy,
-    },
-    {
-      title: "Feedback",
-      url: "#",
-      icon: Send,
     },
   ],
 };

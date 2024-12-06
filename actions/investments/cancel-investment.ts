@@ -50,6 +50,8 @@ export const cancelInvestment = async (params: unknown) => {
       },
     });
 
+    // send cancelled plan event (send TG)
+
     // revalidate layout
     revalidatePath("/", "layout");
 

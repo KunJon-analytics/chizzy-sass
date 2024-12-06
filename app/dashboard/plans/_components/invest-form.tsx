@@ -16,15 +16,22 @@ export function InvestForm({ trancheId }: { trancheId: string }) {
 
   const onSubmit = async () => {
     startTransition(async () => {
-      const { error, success } = await createInvestment({ trancheId });
-      if (error) {
-        toast.error(error);
-        return;
-      }
-      if (success) {
-        toast.success(`Payment link generated successfully. Link: ${success}`);
-        setPaymentLink(success);
+      try {
+        const { error, success } = await createInvestment({ trancheId });
+        console.log({ error, success });
+        if (!!error) {
+          toast.error(error);
+        }
+        if (!!success) {
+          toast.success(
+            `Payment link generated successfully. Link: ${success}`
+          );
+          setPaymentLink(success);
+        }
         router.refresh();
+      } catch (error) {
+        console.error(error);
+        toast.error("Network error");
       }
     });
   };

@@ -31,12 +31,12 @@ export type InvestmentTab = "all" | keyof typeof $Enums.InvestmentStatus;
 export const getStatusColor = (status: $Enums.InvestmentStatus) => {
   switch (status) {
     case "CONFIRMED":
-      return "bg-success";
+      return "bg-success text-success-foreground";
     case "CANCELLED":
-      return "bg-destructive";
+      return "bg-destructive text-destructive-foreground";
     case "PENDING":
-      return "bg-warning";
+      return "bg-warning text-warning-foreground";
     default:
-      return "bg-background";
+      return "";
   }
 };

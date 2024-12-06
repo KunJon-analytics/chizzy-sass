@@ -2,9 +2,19 @@ import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { InvestmentDetailPayload } from "@/lib/validations/investment";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  getStatusColor,
+  InvestmentDetailPayload,
+} from "@/lib/validations/investment";
 import { Button } from "@/components/ui/button";
+import CancelPlanForm from "./cancel-plan-form";
 
 type InvestmentDetailsCardParams = { investmentData: InvestmentDetailPayload };
 
@@ -28,7 +38,9 @@ const InvestmentDetailsCard = async ({
           <div>
             <dt className="font-medium">Status</dt>
             <dd>
-              <Badge>{investmentData.status}</Badge>
+              <Badge className={getStatusColor(investmentData.status)}>
+                {investmentData.status}
+              </Badge>
             </dd>
           </div>
           <div>
@@ -55,23 +67,21 @@ const InvestmentDetailsCard = async ({
                 : "N/A"}
             </dd>
           </div>
-          {showPaymentTx && (
-            <div>
-              <dt className="font-medium">Make Payment</dt>
-              <dd>
-                <Button asChild>
-                  <Link
-                    href={`https://nowpayments.io/payment/?iid=${showPaymentTx.txId}`}
-                    target="_blank"
-                  >
-                    Make Payment
-                  </Link>
-                </Button>
-              </dd>
-            </div>
-          )}
         </dl>
       </CardContent>
+      {showPaymentTx && (
+        <CardFooter className="flex gap-4">
+          <Button asChild>
+            <Link
+              href={`https://nowpayments.io/payment/?iid=${showPaymentTx.txId}`}
+              target="_blank"
+            >
+              Make Payment
+            </Link>
+          </Button>
+          <CancelPlanForm investmentId={showPaymentTx.investmentId} />
+        </CardFooter>
+      )}
     </Card>
   );
 };
