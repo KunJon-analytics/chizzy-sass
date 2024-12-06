@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { InvestmentDetailPayload } from "@/lib/validations/investment";
 import { formatCurrency } from "@/lib/utils";
+import { getInvestmentReward } from "@/lib/utils/investment";
 import StatsCard from "./stats-card";
 
 type StatsContainerParams = { investmentData: InvestmentDetailPayload };
@@ -18,13 +19,21 @@ const StatsContainer = ({ investmentData }: StatsContainerParams) => {
   } = investmentData;
 
   const totalEarnings = started
-    ? differenceInDays(ended ?? new Date(), started) * dailyProfitIncrease * fee
+    ? getInvestmentReward({
+        multiplier: dailyProfitIncrease,
+        noOfDaysStaked: differenceInDays(ended ?? new Date(), started),
+        stakeAmount: fee,
+      })
     : 0;
   const unclaimedDays =
     started && !ended
       ? differenceInDays(new Date(), lastClaimed ?? started)
       : 0;
-  const unclaimedEarnings = dailyProfitIncrease * fee * unclaimedDays;
+  const unclaimedEarnings = getInvestmentReward({
+    multiplier: dailyProfitIncrease,
+    noOfDaysStaked: unclaimedDays,
+    stakeAmount: fee,
+  });
   const paidFees = transactions.find(
     (tx) => tx.status === "CONFIRMED" && tx.type === "DEPOSIT"
   );

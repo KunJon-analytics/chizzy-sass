@@ -9,6 +9,7 @@ import {
   GetUserStats,
   UserChartData,
 } from "../validations/user";
+import { getInvestmentReward } from "../utils/investment";
 
 const getUserStats = async (id: string): Promise<GetUserStats> => {
   try {
@@ -34,21 +35,31 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
     const rewardValue = userDetails.investments.reduce(
       (accumulator, currentValue) => {
         const { dailyProfitIncrease, fee } = currentValue.tranche;
+
         const presentReward = currentValue.started
-          ? differenceInDays(
-              currentValue.ended ?? new Date(),
-              currentValue.started
-            ) *
-            dailyProfitIncrease *
-            fee
+          ? getInvestmentReward({
+              multiplier: dailyProfitIncrease,
+              noOfDaysStaked: differenceInDays(
+                currentValue.ended ?? new Date(),
+                currentValue.started
+              ),
+              stakeAmount: fee,
+              referralCount: userDetails._count.referrals,
+            })
           : 0;
+
         const totalRewards = accumulator.totalRewards + presentReward;
         if (currentValue.started && !currentValue.ended) {
           const noOfdays = differenceInDays(
             new Date(),
             currentValue.lastClaimed ?? currentValue.started
           );
-          const profit = dailyProfitIncrease * fee * noOfdays;
+          const profit = getInvestmentReward({
+            multiplier: dailyProfitIncrease,
+            noOfDaysStaked: noOfdays,
+            stakeAmount: fee,
+            referralCount: userDetails._count.referrals,
+          });
           return {
             unclaimedRewards: accumulator.unclaimedRewards + profit,
             txsValue: accumulator.txsValue + fee,
