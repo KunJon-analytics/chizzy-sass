@@ -1,6 +1,7 @@
 import { Inngest, EventSchemas } from "inngest";
 
 import { siteConfig } from "@/config/site";
+import { TelegramEventType } from "@/lib/validations/notifications";
 
 type ConfirmInvestment = {
   data: {
@@ -9,8 +10,23 @@ type ConfirmInvestment = {
   };
 };
 
+type EndInvestment = {
+  data: {
+    investmentId: string;
+  };
+};
+
+type TelegramEvent = {
+  data: {
+    message: string;
+    type: TelegramEventType;
+  };
+};
+
 type Events = {
   "investment/payment.confirm": ConfirmInvestment;
+  "investment/plan.end": EndInvestment;
+  "notifications/telegram.send": TelegramEvent;
 };
 
 // Create a client to send and receive events

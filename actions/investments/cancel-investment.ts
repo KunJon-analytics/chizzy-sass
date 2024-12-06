@@ -57,7 +57,7 @@ export const cancelInvestment = async (params: unknown) => {
 
     return { success: cancelledInvestment.id };
   } catch (error) {
-    console.error("CREATE_INVESTMENT", error);
+    console.error("CANCEL_INVESTMENT", error);
     return { error: "Server Error" };
   }
 };

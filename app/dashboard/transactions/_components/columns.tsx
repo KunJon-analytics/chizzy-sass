@@ -151,11 +151,11 @@ export const columns: ColumnDef<TransactionsPayload>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
+            {/* <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(transaction.id)}
             >
               Copy transaction ID
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem className="md:hidden">
               <Link href={`/dashboard/investments/${transaction.investmentId}`}>
                 View investment

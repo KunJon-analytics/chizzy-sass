@@ -2,7 +2,7 @@ import { $Enums } from "@prisma/client";
 import { AxiosResponse } from "axios";
 
 import { inngest } from "@/inngest/client";
-import nowPaymentClient, { config } from "@/lib/now-client";
+import nowPaymentClient from "@/lib/now-client";
 import prisma from "@/lib/prisma";
 import {
   NowPaymentList,
@@ -10,6 +10,44 @@ import {
   paymentsConfirmedStatus,
 } from "@/lib/validations/transaction";
 import { env } from "@/env.mjs";
+
+type SuccessfulMessage = {
+  name: string;
+  trancheName: string;
+  amount: number;
+  txId: string;
+};
+
+const successfulStake = ({
+  amount,
+  name,
+  trancheName,
+  txId,
+}: SuccessfulMessage) => {
+  return `<b>Payment Successful</b>
+
+<b>User:</b> ${name}
+<b>Investment Plan:</b> ${trancheName}
+<b>Amount Staked:</b> ${amount} USD
+
+Your payment has been successfully processed. Your investment plan is now active. Thank you for staking with us!
+
+<b>Transaction ID:</b> ${txId}
+`;
+};
+
+const failedStake = ({
+  amount,
+  name,
+  trancheName,
+}: Partial<SuccessfulMessage>) => {
+  return `<b>Payment Failed</b>
+
+<b>User:</b> ${name}
+<b>Investment Plan:</b> ${trancheName}
+<b>Amount Attempted:</b> ${amount} USD
+`;
+};
 
 export const confirmDeposit = inngest.createFunction(
   { id: "confirm-investment-deposit" },
@@ -85,11 +123,22 @@ export const confirmDeposit = inngest.createFunction(
       async () => {
         return prisma.transaction.findFirst({
           where: { txId: invoiceId, type: "DEPOSIT", status: "PENDING" },
+          select: {
+            id: true,
+            txId: true,
+            amount: true,
+            investment: {
+              select: {
+                tranche: { select: { name: true } },
+                user: { select: { name: true } },
+              },
+            },
+          },
         });
       }
     );
 
-    if (!depositTx || txStatus.amount !== depositTx.amount) {
+    if (!depositTx?.txId || txStatus.amount !== depositTx.amount) {
       return { message: `Invalid transaction!` };
     }
 
@@ -103,6 +152,19 @@ export const confirmDeposit = inngest.createFunction(
             investment: { update: { status: "CANCELLED" } },
           },
         });
+      });
+
+      // send TG Message (alert admin for failed deposit)
+      await step.sendEvent("send-failed-deposit-notification", {
+        name: "notifications/telegram.send",
+        data: {
+          message: failedStake({
+            amount: depositTx.amount,
+            trancheName: depositTx.investment.tranche.name,
+            name: depositTx.investment.user.name,
+          }),
+          type: "DEV_MODE",
+        },
       });
     }
 
@@ -118,6 +180,20 @@ export const confirmDeposit = inngest.createFunction(
             },
           },
         });
+      });
+
+      // send TG Message (alert admin for successful deposit)
+      await step.sendEvent("send-succesful-deposit-notification", {
+        name: "notifications/telegram.send",
+        data: {
+          message: successfulStake({
+            amount: depositTx.amount,
+            trancheName: depositTx.investment.tranche.name,
+            txId: depositTx.txId,
+            name: depositTx.investment.user.name,
+          }),
+          type: "DEV_MODE",
+        },
       });
     }
 

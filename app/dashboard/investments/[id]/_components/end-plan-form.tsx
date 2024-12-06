@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "sonner";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 
@@ -26,6 +27,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { endInvestment } from "@/actions/investments/end-investment";
+import { LoadingAnimation } from "@/components/loading-animation";
 
 interface EndPlanModalProps {
   currentWalletAddress: string;
@@ -45,8 +48,25 @@ export function EndPlanModal({
   };
 
   const handleFinalConfirm = () => {
-    setIsAlertOpen(false);
-    setIsOpen(false);
+    startTransition(async () => {
+      try {
+        const { error, success } = await endInvestment({ id: investmentId });
+        if (success) {
+          toast.success(
+            "Your investment plan will is terminated, and you will receive your balance in less than 2 hours.",
+            {}
+          );
+        } else {
+          toast.error(error);
+        }
+
+        setIsAlertOpen(false);
+        setIsOpen(false);
+      } catch (error) {
+        console.log(error);
+        toast.error("Network Error");
+      }
+    });
   };
 
   return (
@@ -106,7 +126,7 @@ export function EndPlanModal({
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleFinalConfirm}>
-              Yes, end my plan
+              {isPending ? <LoadingAnimation /> : " Yes, end my plan"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
