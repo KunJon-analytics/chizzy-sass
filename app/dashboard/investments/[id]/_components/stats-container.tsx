@@ -14,6 +14,7 @@ const StatsContainer = ({ investmentData }: StatsContainerParams) => {
     started,
     ended,
     lastClaimed,
+    transactions,
   } = investmentData;
 
   const totalEarnings = started
@@ -24,6 +25,9 @@ const StatsContainer = ({ investmentData }: StatsContainerParams) => {
       ? differenceInDays(new Date(), lastClaimed ?? started)
       : 0;
   const unclaimedEarnings = dailyProfitIncrease * fee * unclaimedDays;
+  const paidFees = transactions.find(
+    (tx) => tx.status === "CONFIRMED" && tx.type === "DEPOSIT"
+  );
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -31,7 +35,10 @@ const StatsContainer = ({ investmentData }: StatsContainerParams) => {
         title="Total Earnings"
         value={`${formatCurrency(totalEarnings)}`}
       />
-      <StatsCard title="Total Value Locked" value={`${formatCurrency(fee)}`} />
+      <StatsCard
+        title="Total Value Locked"
+        value={`${formatCurrency(paidFees ? fee : 0)}`}
+      />
       <StatsCard
         title="Claimed Earnings"
         value={`${formatCurrency(totalEarnings - unclaimedEarnings)}`}

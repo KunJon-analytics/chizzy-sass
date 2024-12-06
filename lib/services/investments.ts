@@ -41,7 +41,7 @@ export const getCachedUserInvestments = unstable_cache(
 );
 
 export const getCachedUserInvestmentDetail = unstable_cache(
-  async (userId: string, id: string) => getUserInvestmentDetail(id, userId),
+  async (userId: string, id: string) => getUserInvestmentDetail(userId, id),
   ["user-investments"],
   { revalidate: 80000 }
 );

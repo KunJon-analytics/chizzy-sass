@@ -1,3 +1,5 @@
+import { Tranche } from "@prisma/client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,24 +10,29 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
+import { InvestForm } from "./invest-form";
 
 interface TrancheCardProps {
-  name: string;
-  fee: number;
-  coolDownInterval: number;
-  dailyProfitIncrease: number;
+  tranche: Tranche;
   isCurrentTranche: boolean;
   isSuggestedPlan: boolean;
+  activeInvestment: boolean;
 }
 
 export function TrancheCard({
-  name,
-  fee,
-  coolDownInterval,
-  dailyProfitIncrease,
   isCurrentTranche,
   isSuggestedPlan,
+  activeInvestment,
+  tranche,
 }: TrancheCardProps) {
+  const {
+    cooldownInterval,
+    dailyProfitIncrease,
+    fee,
+    id: trancheId,
+    name,
+  } = tranche;
+
   return (
     <Card className={`w-full ${isCurrentTranche ? "border-primary" : ""}`}>
       <CardHeader>
@@ -46,7 +53,7 @@ export function TrancheCard({
           </div>
           <div className="flex justify-between">
             <dt>Cool Down:</dt>
-            <dd>{coolDownInterval} days</dd>
+            <dd>{cooldownInterval} days</dd>
           </div>
           <div className="flex justify-between">
             <dt>Daily Profit Increase:</dt>
@@ -55,12 +62,17 @@ export function TrancheCard({
         </dl>
       </CardContent>
       <CardFooter>
-        <Button
-          className="w-full"
-          variant={isCurrentTranche ? "outline" : "default"}
-        >
-          {isCurrentTranche ? "Current Plan" : "Invest Now"}
-        </Button>
+        {activeInvestment ? (
+          <Button
+            className="w-full"
+            variant={isCurrentTranche ? "outline" : "default"}
+            disabled={activeInvestment}
+          >
+            {isCurrentTranche ? "Current Plan" : "Invest Now"}
+          </Button>
+        ) : (
+          <InvestForm trancheId={trancheId} />
+        )}
       </CardFooter>
     </Card>
   );

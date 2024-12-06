@@ -28,13 +28,33 @@ export default async function DashboardPlansPage() {
     redirect("/login");
   }
 
-  const tranches = await getCachedTranches();
+  const tranchesLiveInvestment = await getCachedTranches();
 
-  const currentTranche = tranches.find(
-    (tranche) => tranche.investments.length > 0
-  );
+  const pendingInvestment = tranchesLiveInvestment.find((tranche) => {
+    const pendingInvestment = tranche.investments.find(
+      (inv) => inv.status === "PENDING"
+    );
+    return !!pendingInvestment;
+  })?.investments[0];
 
-  const currentTrancheInvestment = currentTranche?.investments[0];
+  const formattedPending = pendingInvestment
+    ? {
+        ...pendingInvestment,
+        trancheName:
+          tranchesLiveInvestment.find(
+            (tx) => tx.id === pendingInvestment?.trancheId
+          )?.name || siteConfig.defaultTranche,
+      }
+    : undefined;
+
+  const activeTranche = tranchesLiveInvestment.find((tranche) => {
+    const confirmedInvestment = tranche.investments.find(
+      (inv) => inv.status === "CONFIRMED"
+    );
+    return !!confirmedInvestment;
+  });
+
+  const activeTrancheInvestment = activeTranche?.investments[0];
 
   return (
     <DashboardLayout
@@ -49,26 +69,23 @@ export default async function DashboardPlansPage() {
       <div className="container mx-auto py-8">
         <h1 className="text-3xl font-bold mb-6">Investment Plans</h1>
 
-        {currentTrancheInvestment ? (
+        {activeTrancheInvestment ? (
           <CurrentPlanCard
-            name={currentTranche.name}
-            fee={currentTranche.fee}
-            coolDownInterval={currentTranche.cooldownInterval}
-            dailyProfitIncrease={currentTranche.dailyProfitIncrease}
-            investmentId={currentTrancheInvestment.id}
+            tranche={activeTranche}
+            investmentId={activeTrancheInvestment.id}
             unclaimedRewards={
               differenceInDays(
                 new Date(),
-                currentTrancheInvestment.lastClaimed ||
-                  currentTrancheInvestment.started ||
+                activeTrancheInvestment.lastClaimed ||
+                  activeTrancheInvestment.started ||
                   new Date()
               ) *
-              currentTranche.fee *
-              currentTranche.dailyProfitIncrease
+              activeTranche.fee *
+              activeTranche.dailyProfitIncrease
             }
           />
         ) : (
-          <InvestNowCard />
+          <InvestNowCard pendingInvestment={formattedPending} />
         )}
 
         <h2 className="text-2xl font-semibold mb-6">Available Plans</h2>
@@ -76,17 +93,15 @@ export default async function DashboardPlansPage() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           id="plans"
         >
-          {tranches.map((tranche) => (
+          {tranchesLiveInvestment.map((tranche) => (
             <TrancheCard
               key={tranche.id}
-              name={tranche.name}
-              fee={tranche.fee}
-              coolDownInterval={tranche.cooldownInterval}
-              dailyProfitIncrease={tranche.dailyProfitIncrease}
               isCurrentTranche={
-                currentTranche ? tranche.name === currentTranche.name : false
+                activeTranche ? tranche.name === activeTranche.name : false
               }
               isSuggestedPlan={tranche.name === suggestedPlan}
+              activeInvestment={!!activeTrancheInvestment}
+              tranche={tranche}
             />
           ))}
         </div>

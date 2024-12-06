@@ -9,6 +9,8 @@ export const env = createEnv({
     CMC_PRO_API_KEY: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     NOW_PAYMENT_API_KEY: z.string().min(1),
+    NOW_PASSWORD: z.string().min(1),
+    NOW_EMAIL: z.string().email(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
@@ -21,6 +23,8 @@ export const env = createEnv({
     CMC_PRO_API_KEY: process.env.CMC_PRO_API_KEY,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     NOW_PAYMENT_API_KEY: process.env.NOW_PAYMENT_API_KEY,
+    NOW_EMAIL: process.env.NOW_EMAIL,
+    NOW_PASSWORD: process.env.NOW_PASSWORD,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_RESEND_FROM_EMAIL: process.env.NEXT_PUBLIC_RESEND_FROM_EMAIL,
   },

@@ -6,7 +6,9 @@ const getTranches = async (userId?: string) => {
   try {
     return prisma.tranche.findMany({
       include: {
-        investments: { where: { userId, status: "CONFIRMED", ended: null } },
+        investments: {
+          where: { userId, status: { not: "CANCELLED" }, ended: null },
+        },
       },
     });
   } catch (error) {

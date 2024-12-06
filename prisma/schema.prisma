@@ -113,9 +113,10 @@ model Tranche {
 }
 
 model Transaction {
-  id           String            @id
+  id           String            @id @default(uuid())
   type         TransactionType
   status       TransactionStatus @default(PENDING)
+  txId         String?
   investmentId String
   investment   Investment        @relation(fields: [investmentId], references: [id])
   amount       Float

@@ -1,3 +1,4 @@
+import { Tranche } from "@prisma/client";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -11,19 +12,13 @@ import {
 import { formatCurrency } from "@/lib/utils";
 
 interface CurrentPlanCardProps {
-  name: string;
-  fee: number;
-  coolDownInterval: number;
-  dailyProfitIncrease: number;
+  tranche: Tranche;
   investmentId: string;
   unclaimedRewards: number;
 }
 
 export function CurrentPlanCard({
-  name,
-  fee,
-  coolDownInterval,
-  dailyProfitIncrease,
+  tranche: { cooldownInterval, dailyProfitIncrease, fee, name },
   investmentId,
   unclaimedRewards,
 }: CurrentPlanCardProps) {
@@ -40,7 +35,7 @@ export function CurrentPlanCard({
           </div>
           <div>
             <dt className="font-medium">Cool Down Interval:</dt>
-            <dd>{coolDownInterval} days</dd>
+            <dd>{cooldownInterval} days</dd>
           </div>
           <div>
             <dt className="font-medium">Daily Profit Increase:</dt>

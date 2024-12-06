@@ -33,7 +33,7 @@ export const columns: ColumnDef<TransactionsPayload>[] = [
               : "destructive"
           }
         >
-          {getStatusIcon(status)}
+          {getStatusIcon(status)} <span className="ml-2">{status}</span>
           {type === "DEPOSIT" && <span className="md:hidden">📥</span>}
           {type === "WITHDRAWAL" && <span className="md:hidden">📤</span>}
           {type === "CLAIM_REWARD" && <span className="md:hidden">🔄</span>}
@@ -138,6 +138,8 @@ export const columns: ColumnDef<TransactionsPayload>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const transaction = row.original;
+      const showPaymentLink =
+        transaction.status === "PENDING" && transaction.type === "DEPOSIT";
 
       return (
         <DropdownMenu>
@@ -159,6 +161,16 @@ export const columns: ColumnDef<TransactionsPayload>[] = [
                 View investment
               </Link>
             </DropdownMenuItem>
+            {showPaymentLink && (
+              <DropdownMenuItem>
+                <Link
+                  href={`https://nowpayments.io/payment/?iid=${transaction.txId}`}
+                  target="_blank"
+                >
+                  Make Payment
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuSeparator />
             <DropdownMenuItem>
               <Link href={`/dashboard/transactions/${transaction.id}`}>

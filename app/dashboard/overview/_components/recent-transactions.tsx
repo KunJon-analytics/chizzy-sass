@@ -57,7 +57,7 @@ export async function RecentTransactionsCard() {
               </div>
               <div className="text-right">
                 <p className="text-sm font-semibold">
-                  {transaction.type !== "DEPOSIT" ? "-" : "+"}$
+                  {transaction.type !== "DEPOSIT" ? "- " : "+ "}
                   {formatCurrency(transaction.amount)}
                 </p>
                 <Link

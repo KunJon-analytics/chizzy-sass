@@ -19,6 +19,7 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
           include: {
             tranche: true,
           },
+          where: { status: "CONFIRMED" },
         },
         _count: { select: { referrals: true } },
       },

@@ -26,6 +26,9 @@ const TransactionDetailCard = async ({
     notFound();
   }
 
+  const showPaymentLink =
+    transaction.status === "PENDING" && transaction.type === "DEPOSIT";
+
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
@@ -60,7 +63,8 @@ const TransactionDetailCard = async ({
                   : "warning"
               }
             >
-              {getStatusIcon(transaction.status)}
+              {getStatusIcon(transaction.status)}{" "}
+              <span className="ml-2">{transaction.status}</span>
             </Badge>
           </div>
           <div>
@@ -105,7 +109,7 @@ const TransactionDetailCard = async ({
                 ID: {transaction.investment.id}
               </p>
             </div>
-            <Button asChild>
+            <Button asChild variant="outline">
               <Link
                 href={`/dashboard/investments/${transaction.investment.id}`}
               >
@@ -116,7 +120,16 @@ const TransactionDetailCard = async ({
         </div>
       </CardContent>
       <CardFooter className="justify-between">
-        <Button variant="outline">Print Receipt</Button>
+        {showPaymentLink && (
+          <Button asChild>
+            <Link
+              href={`https://nowpayments.io/payment/?iid=${transaction.txId}`}
+              target="_blank"
+            >
+              Make Payment
+            </Link>
+          </Button>
+        )}
         <Button variant="secondary">Contact Support</Button>
       </CardFooter>
     </Card>

@@ -4,12 +4,16 @@ import { formatDistanceToNow } from "date-fns";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { InvestmentDetailPayload } from "@/lib/validations/investment";
+import { Button } from "@/components/ui/button";
 
 type InvestmentDetailsCardParams = { investmentData: InvestmentDetailPayload };
 
 const InvestmentDetailsCard = async ({
   investmentData,
 }: InvestmentDetailsCardParams) => {
+  const showPaymentTx = investmentData.transactions.find(
+    (tx) => tx.status === "PENDING" && tx.type === "DEPOSIT"
+  );
   return (
     <Card>
       <CardHeader>
@@ -19,14 +23,7 @@ const InvestmentDetailsCard = async ({
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <dt className="font-medium">Tranche Name</dt>
-            <dd>
-              <Link
-                href={`/dashboard/tranche/${investmentData.trancheId}`}
-                className="text-blue-600 hover:underline"
-              >
-                {investmentData.tranche.name}
-              </Link>
-            </dd>
+            <dd>{investmentData.tranche.name}</dd>
           </div>
           <div>
             <dt className="font-medium">Status</dt>
@@ -58,6 +55,21 @@ const InvestmentDetailsCard = async ({
                 : "N/A"}
             </dd>
           </div>
+          {showPaymentTx && (
+            <div>
+              <dt className="font-medium">Make Payment</dt>
+              <dd>
+                <Button asChild>
+                  <Link
+                    href={`https://nowpayments.io/payment/?iid=${showPaymentTx.txId}`}
+                    target="_blank"
+                  >
+                    Make Payment
+                  </Link>
+                </Button>
+              </dd>
+            </div>
+          )}
         </dl>
       </CardContent>
     </Card>
