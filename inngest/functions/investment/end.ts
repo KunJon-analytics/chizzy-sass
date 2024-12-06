@@ -16,11 +16,6 @@ export const endInvestmentEvent = inngest.createFunction(
           txId: null,
           type: "WITHDRAWAL",
         },
-        include: {
-          investment: {
-            include: { user: { select: { evmwalletAddress: true } } },
-          },
-        },
       });
     });
 

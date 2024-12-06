@@ -27,18 +27,23 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { endInvestment } from "@/actions/investments/end-investment";
 import { LoadingAnimation } from "@/components/loading-animation";
+import { claimReward } from "@/actions/investments/claim-investment-reward";
+import { formatCurrency } from "@/lib/utils";
 
-interface EndPlanModalProps {
+interface ClaimRewardModalProps {
   currentWalletAddress: string;
+  reward: number;
   investmentId: string;
+  show: boolean;
 }
 
-export function EndPlanModal({
+export function ClaimRewardModal({
   currentWalletAddress,
   investmentId,
-}: EndPlanModalProps) {
+  reward,
+  show,
+}: ClaimRewardModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -50,7 +55,7 @@ export function EndPlanModal({
   const handleFinalConfirm = () => {
     startTransition(async () => {
       try {
-        const { error, success } = await endInvestment({ id: investmentId });
+        const { error, success } = await claimReward({ id: investmentId });
         if (success) {
           toast.success(
             "Your investment plan will is terminated, and you will receive your balance in less than 2 hours.",
@@ -69,17 +74,22 @@ export function EndPlanModal({
     });
   };
 
+  if (!show) {
+    return null;
+  }
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button variant="destructive">End Investment Plan</Button>
+          <Button>Claim Investment Reward</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>End Investment Plan</DialogTitle>
+            <DialogTitle>Claim Investment Reward</DialogTitle>
             <DialogDescription>
-              Please confirm your wallet address to receive your staked tokens.
+              Please confirm your wallet address to receive your investment
+              reward.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -104,10 +114,13 @@ export function EndPlanModal({
                 Update wallet address in account settings
               </Link>
             </div>
+            <div className="text-sm text-muted-foreground">
+              Reward Amount: {formatCurrency(reward)}
+            </div>
           </div>
           <DialogFooter>
             <Button type="submit" onClick={handleConfirm}>
-              Confirm End Plan
+              Confirm Claim
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -116,17 +129,17 @@ export function EndPlanModal({
       <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogTitle>Confirm Reward Claim</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. Your investment plan will be
-              terminated, and you will receive your balance in less than 2
-              hours.
+              You are about to claim your investment reward of{" "}
+              {formatCurrency(reward)}. The reward will be sent to the specified
+              wallet address in less than 2 hours.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction onClick={handleFinalConfirm}>
-              {isPending ? <LoadingAnimation /> : "Yes, end my plan"}
+              {isPending ? <LoadingAnimation /> : "Yes, claim my reward"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+import { differenceInDays, formatDistanceToNow } from "date-fns";
 
 import { Badge } from "@/components/ui/badge";
 import {
@@ -14,8 +14,11 @@ import {
   InvestmentDetailPayload,
 } from "@/lib/validations/investment";
 import { Button } from "@/components/ui/button";
+import { getInvestmentReward } from "@/lib/utils/investment";
+import { siteConfig } from "@/config/site";
 import CancelPlanForm from "./cancel-plan-form";
 import { EndPlanModal } from "./end-plan-form";
+import { ClaimRewardModal } from "./claim-reward-form";
 
 type InvestmentDetailsCardParams = { investmentData: InvestmentDetailPayload };
 
@@ -25,6 +28,19 @@ const InvestmentDetailsCard = async ({
   const showPaymentTx = investmentData.transactions.find(
     (tx) => tx.status === "PENDING" && tx.type === "DEPOSIT"
   );
+
+  const unclaimedDays =
+    investmentData.started && !investmentData.ended
+      ? differenceInDays(
+          new Date(),
+          investmentData.lastClaimed ?? investmentData.started
+        )
+      : 0;
+  const unclaimedEarnings = getInvestmentReward({
+    multiplier: investmentData.tranche.dailyProfitIncrease,
+    noOfDaysStaked: unclaimedDays,
+    stakeAmount: investmentData.tranche.fee,
+  });
 
   const showEndButton = investmentData.started && !investmentData.ended;
 
@@ -87,14 +103,20 @@ const InvestmentDetailsCard = async ({
             <CancelPlanForm investmentId={showPaymentTx.investmentId} />
           </>
         )}
-        {!!investmentData.user?.evmwalletAddress ? (
-          <EndPlanModal
-            currentWalletAddress={investmentData.user.evmwalletAddress}
-            investmentId={investmentData.id}
-          />
-        ) : (
-          "No Wallet"
-        )}
+        {!!investmentData.user?.evmwalletAddress && showEndButton ? (
+          <>
+            <EndPlanModal
+              currentWalletAddress={investmentData.user.evmwalletAddress}
+              investmentId={investmentData.id}
+            />
+            <ClaimRewardModal
+              show={unclaimedEarnings >= siteConfig.minClaimmableReward}
+              currentWalletAddress={investmentData.user.evmwalletAddress}
+              investmentId={investmentData.id}
+              reward={unclaimedEarnings}
+            />
+          </>
+        ) : null}
       </CardFooter>
     </Card>
   );

@@ -38,11 +38,11 @@ const getTransaction = async (id: string) => {
 export const getCachedUserTransactions = unstable_cache(
   async (userId: string) => getUserTransactions(userId),
   ["user-transactions"],
-  { revalidate: 80000 }
+  { revalidate: 3600 }
 );
 
 export const getCachedTransaction = unstable_cache(
   async (transactionId: string) => getTransaction(transactionId),
   ["transactions"],
-  { revalidate: 80000 }
+  { revalidate: 3600 }
 );

@@ -114,5 +114,5 @@ const getUserStats = async (id: string): Promise<GetUserStats> => {
 export const getCachedUserStats = unstable_cache(
   async (userId: string) => getUserStats(userId),
   ["user-stats"],
-  { revalidate: 80000 }
+  { revalidate: 3600 }
 );

@@ -28,7 +28,7 @@ export const endInvestment = async (params: unknown) => {
 
     const { id: userId } = session.user;
 
-    // ensure this investment is CONFIRMED, not ended & owned by user
+    // ensure this investment is CONFIRMED, started, not ended & owned by user
     const investment = await prisma.investment.findUnique({
       where: { userId, id, status: "CONFIRMED", ended: null },
       select: { tranche: { select: { fee: true } }, id: true },
@@ -43,7 +43,6 @@ export const endInvestment = async (params: unknown) => {
     const endedInvestment = await prisma.investment.update({
       where: { id },
       data: {
-        status: "CONFIRMED",
         ended: new Date(),
         transactions: {
           create: {

@@ -1,7 +1,6 @@
 import { differenceInDays } from "date-fns";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { InvestmentDetailPayload } from "@/lib/validations/investment";
 import { formatCurrency } from "@/lib/utils";
 import { getInvestmentReward } from "@/lib/utils/investment";
@@ -62,9 +61,6 @@ const StatsContainer = ({ investmentData }: StatsContainerParams) => {
           <div className="text-2xl font-bold">
             {formatCurrency(unclaimedEarnings)}
           </div>
-          <Button className="mt-2" disabled={unclaimedEarnings === 0}>
-            Claim Rewards
-          </Button>
         </CardContent>
       </Card>
     </div>

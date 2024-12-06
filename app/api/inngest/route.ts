@@ -4,6 +4,7 @@ import { inngest } from "@/inngest/client";
 import { confirmDeposit } from "@/inngest/functions/investment/payment";
 import { telegramMessage } from "@/inngest/functions/notifications/telegram-message";
 import { endInvestmentEvent } from "@/inngest/functions/investment/end";
+import { claimInvestmentEvent } from "@/inngest/functions/investment/claim";
 
 // Create an API that serves zero functions
 export const { GET, POST, PUT } = serve({
@@ -13,5 +14,6 @@ export const { GET, POST, PUT } = serve({
     confirmDeposit,
     telegramMessage,
     endInvestmentEvent,
+    claimInvestmentEvent,
   ],
 });

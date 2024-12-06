@@ -20,5 +20,5 @@ const getTranches = async (userId?: string) => {
 export const getCachedTranches = unstable_cache(
   async (userId?: string) => getTranches(userId),
   ["site-tranches"],
-  { revalidate: 80000 }
+  { revalidate: 3600 }
 );

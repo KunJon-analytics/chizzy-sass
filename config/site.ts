@@ -6,6 +6,7 @@ export type SiteConfig = {
   url: string;
   ogImage: string;
   defaultTranche: string;
+  minClaimmableReward: number;
   links: {
     twitter: string;
     github: string;
@@ -22,6 +23,7 @@ export const siteConfig: SiteConfig = {
     "An open source application built using the new router, server components and everything new in Next.js 13.",
   url: baseUrl,
   defaultTranche: "Silver",
+  minClaimmableReward: 1,
   ogImage: `${baseUrl}/og.jpg`,
   links: {
     twitter: "https://twitter.com/shadcn",
