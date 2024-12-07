@@ -11,19 +11,19 @@ type Step = { title: string; description: string };
 
 const steps: Step[] = [
   {
-    title: "Fill her up",
+    title: "Create Your Account",
     description:
-      " Bro ipsum dolor sit amet gaper backside single track, manny Bike epic clipless.",
+      "Sign up and verify your account to start your investment journey.",
   },
   {
-    title: "Fill her up",
+    title: "Stake Cryptos",
     description:
-      " Bro ipsum dolor sit amet gaper backside single track, manny Bike epic clipless.",
+      "Choose from major blockchain networks like Solana, Ethereum, BSC and many more to stake your funds.",
   },
   {
-    title: "Fill her up",
+    title: "Claim Your Profits",
     description:
-      " Bro ipsum dolor sit amet gaper backside single track, manny Bike epic clipless.",
+      "Withdraw your stake and claim your AI-generated profits at any time.",
   },
 ];
 
@@ -32,11 +32,11 @@ const HowItWorks = () => {
     <div id="how-it-works">
       <CardContainer>
         <CardHeader>
-          <CardIcon icon="zap" />
-          <CardTitle>Let{"'"} launch a rocket into outer space</CardTitle>
+          <CardIcon icon="cog" />
+          <CardTitle>Getting Started: Your Path to Earnings</CardTitle>
           <CardDescription className="max-w-md">
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium doloremque rem aperiam, eaque ipsa quae.
+            Learn how our platform helps you start earning in three simple
+            steps.
           </CardDescription>
         </CardHeader>
 
