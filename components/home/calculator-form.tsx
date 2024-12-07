@@ -34,17 +34,13 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-
-/**
- * IDEA we can create a list of last requests and show them in a list, but
- * we will have to sync both expiration dates, for redis and localStorage
- */
-
-const METHODS = ["GET", "POST", "PUT", "DELETE"] as const;
+import { Tranche } from "@prisma/client";
+import { getInvestmentReward } from "@/lib/utils/investment";
+import { formatCurrency } from "@/lib/utils";
 
 const formSchema = z.object({
   amount: z.coerce.number().min(100),
-  tranche: z.enum(METHODS).default("GET"),
+  tranche: z.string(),
   noOfDays: z.coerce
     .number()
     .min(1, {
@@ -58,20 +54,31 @@ const formSchema = z.object({
 
 type FormSchema = z.infer<typeof formSchema>;
 
+type CalculatorFormProps = { tranches: Tranche[] };
+
 type ResultType = FormSchema & { result: number };
 
-export function CalculatorForm() {
+export function CalculatorForm({ tranches }: CalculatorFormProps) {
   const [isPending, startTransition] = useTransition();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
-    defaultValues: { amount: 100, noOfDays: 30, tranche: "GET" },
+    defaultValues: { amount: 100, noOfDays: 30, tranche: tranches[0]?.name },
   });
   const [result, setResult] = useState<null | ResultType>(null);
 
   function onSubmit(data: FormSchema) {
     startTransition(async () => {
       try {
-        const result = data.noOfDays * data.amount;
+        const selectedTranche = tranches.find(
+          (tranche) => tranche.name === data.tranche
+        );
+        const result = selectedTranche
+          ? getInvestmentReward({
+              multiplier: selectedTranche.dailyProfitIncrease,
+              noOfDaysStaked: data.noOfDays,
+              stakeAmount: data.amount,
+            })
+          : 0;
         setResult({ ...data, result });
       } catch (_e) {
         // TODO: better error handling, including e.g. toast
@@ -101,9 +108,9 @@ export function CalculatorForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {METHODS.map((method) => (
-                        <SelectItem key={method} value={method}>
-                          {method}
+                      {tranches.map((tranche) => (
+                        <SelectItem key={tranche.id} value={tranche.name}>
+                          {tranche.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -207,7 +214,9 @@ function TableResult({
               <TableCell className="flex items-center gap-2 font-medium">
                 Amount
               </TableCell>
-              <TableCell className="text-right">{result.amount}</TableCell>
+              <TableCell className="text-right">
+                {formatCurrency(result.amount)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="flex items-center gap-2 font-medium">
@@ -219,7 +228,9 @@ function TableResult({
               <TableCell className="flex items-center gap-2 font-medium">
                 Profit
               </TableCell>
-              <TableCell className="text-right">${result.result}</TableCell>
+              <TableCell className="text-right">
+                ${formatCurrency(result.result)}
+              </TableCell>
             </TableRow>
           </>
         ) : (
