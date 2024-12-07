@@ -40,7 +40,7 @@ export default async function UserPage() {
             <Input
               id="email"
               type="email"
-              value={`${userDetail.walletaddress}`}
+              value={`${userDetail.walletaddress ?? ""}`}
               disabled
             />
             <UpdateWalletForm
