@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import Link, { type LinkProps } from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -12,10 +13,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-
 import { marketingPagesConfig } from "@/config/pages";
 import { cn } from "@/lib/utils";
-import * as React from "react";
 import { Icons, type ValidIcon } from "../icons";
 import { BrandName } from "./brand-name";
 import { LoginButton } from "./login-button";
@@ -74,11 +73,6 @@ export function MarketingHeader({ className }: Props) {
                     <NavigationMenuContent>
                       <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                         {children?.map((item) => {
-                          const isExternal = item.href.startsWith("http");
-                          const _externalProps = isExternal
-                            ? { target: "_blank" }
-                            : {};
-                          const _isActive = pathname.startsWith(item.href);
                           return (
                             <ListItem
                               key={item.title}

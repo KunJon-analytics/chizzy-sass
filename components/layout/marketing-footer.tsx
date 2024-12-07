@@ -21,11 +21,11 @@ export function MarketingFooter({ className }: Props) {
             <div>
               <BrandName />
               <p className="mt-2 max-w-md font-light text-muted-foreground text-sm">
-                We are on a mission to provide a reliable, easy and fast way to
-                monitor the performance of your APIs and websites.
+                AI-powered investments with secure and seamless trading across
+                multiple blockchain networks.
                 <br />
                 <span className="underline decoration-dotted underline-offset-2">
-                  Speed Matters
+                  Invest Smart
                 </span>
               </p>
             </div>
@@ -33,15 +33,12 @@ export function MarketingFooter({ className }: Props) {
           <div className="order-2 flex flex-col gap-3 text-sm">
             <p className="font-semibold text-foreground">Resources</p>
             <FooterLink href="/blog" label="Blog" />
-            <FooterLink href="/pricing" label="Pricing" />
+            <FooterLink href="/#tranches" label="Tranches" />
             <FooterLink href="https://docs.openstatus.dev" label="Docs" />
-            <FooterLink href="/oss-friends" label="OSS Friends" />
-            <FooterLink href="/status" label="External Providers Monitoring" />
           </div>
           <div className="order-3 flex flex-col gap-3 text-sm">
             <p className="font-semibold text-foreground">Company</p>
             <FooterLink href="/about" label="About" />
-            <FooterLink href="/changelog" label="Changelog" />
             <FooterLink href="/legal/terms" label="Terms" />
             <FooterLink href="/legal/privacy" label="Privacy" />
           </div>
@@ -50,10 +47,6 @@ export function MarketingFooter({ className }: Props) {
             <FooterLink href="/play/checker" label="Speed Checker" />
             <FooterLink href="/play/curl" label="cURL Builder" />
             <FooterLink href="https://openstat.us" label="All Status Codes" />
-            <FooterLink
-              href="https://light.openstatus.dev"
-              label="Vercel Edge Ping"
-            />
           </div>
         </div>
         <div className="flex items-center justify-between gap-3">

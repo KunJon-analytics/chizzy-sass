@@ -11,6 +11,7 @@ import {
   ContextMenuItem,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { siteConfig } from "@/config/site";
 
 export function BrandName() {
   return (
@@ -18,18 +19,18 @@ export function BrandName() {
       <ContextMenuTrigger>
         <Link href="/" className="flex items-center gap-2 font-cal">
           <Image
-            src="/icon.png"
-            alt="OpenStatus"
+            src="/logo.png"
+            alt={siteConfig.name}
             height={30}
             width={30}
             className="rounded-full border border-border bg-transparent"
           />
-          OpenStatus
+          {siteConfig.name}
         </Link>
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem asChild>
-          <a href="/assets/logos/OpenStatus.svg" download="openstatus.svg">
+          <a href="/logo.png" download={`${siteConfig.name}.png`}>
             Download SVG
           </a>
         </ContextMenuItem>

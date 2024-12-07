@@ -2,7 +2,6 @@
 
 import Link, { type LinkProps } from "next/link";
 import { Menu } from "lucide-react";
-import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import {
@@ -21,7 +20,6 @@ import {
 } from "@/components/ui/sheet";
 import { marketingPagesConfig } from "@/config/pages";
 import { socialsConfig } from "@/config/socials";
-import { useWindowScroll } from "@/hooks/use-window-scroll";
 import { cn } from "@/lib/utils";
 import { Icons, type ValidIcon } from "../icons";
 import { LoginButton } from "./login-button";
@@ -29,9 +27,6 @@ import { SocialIconButton } from "./social-icon-button";
 
 export function MarketingMenu() {
   const [open, setOpen] = React.useState(false);
-  const pathname = usePathname();
-  const [{ y }] = useWindowScroll();
-  const _isScroll = React.useMemo(() => y && y > 0, [y]);
 
   React.useEffect(() => {
     setOpen(false);
@@ -57,9 +52,6 @@ export function MarketingMenu() {
           <ul className="grid gap-1">
             {marketingPagesConfig.map(({ href, title, icon, children }) => {
               if (!children) {
-                const isExternal = href.startsWith("http");
-                const _externalProps = isExternal ? { target: "_blank" } : {};
-                const _isActive = pathname.startsWith(href);
                 return (
                   <li key={href} className="w-full">
                     <ListItemSingle
@@ -81,11 +73,7 @@ export function MarketingMenu() {
                         <ul>
                           {children.map((page) => {
                             const { href, title, icon } = page;
-                            const isExternal = href.startsWith("http");
-                            const _externalProps = isExternal
-                              ? { target: "_blank" }
-                              : {};
-                            const _isActive = pathname.startsWith(href);
+
                             return (
                               <li key={href} className="w-full">
                                 <ListItem

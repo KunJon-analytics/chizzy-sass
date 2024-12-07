@@ -29,27 +29,29 @@ const steps: Step[] = [
 
 const HowItWorks = () => {
   return (
-    <CardContainer>
-      <CardHeader>
-        <CardIcon icon="zap" />
-        <CardTitle>Let{"'"} launch a rocket into outer space</CardTitle>
-        <CardDescription className="max-w-md">
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-          accusantium doloremque rem aperiam, eaque ipsa quae.
-        </CardDescription>
-      </CardHeader>
+    <div id="how-it-works">
+      <CardContainer>
+        <CardHeader>
+          <CardIcon icon="zap" />
+          <CardTitle>Let{"'"} launch a rocket into outer space</CardTitle>
+          <CardDescription className="max-w-md">
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque rem aperiam, eaque ipsa quae.
+          </CardDescription>
+        </CardHeader>
 
-      <div className="grid gap-8 row-gap-5 md:row-gap-8 lg:grid-cols-3">
-        {steps.map((step, index) => (
-          <Step
-            position={index + 1}
-            showMark={index + 1 === steps.length}
-            step={step}
-            key={`step-${index}`}
-          />
-        ))}
-      </div>
-    </CardContainer>
+        <div className="grid gap-8 row-gap-5 md:row-gap-8 lg:grid-cols-3">
+          {steps.map((step, index) => (
+            <Step
+              position={index + 1}
+              showMark={index + 1 === steps.length}
+              step={step}
+              key={`step-${index}`}
+            />
+          ))}
+        </div>
+      </CardContainer>
+    </div>
   );
 };
 

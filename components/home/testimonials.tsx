@@ -39,7 +39,7 @@ const testimonials = [
 
 export function TestimonialsSection() {
   return (
-    <section className="py-12">
+    <section className="py-12" id="testimonial">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-8">
           What Our Investors Say

@@ -20,7 +20,7 @@ const baseUrl = process.env.VERCEL_URL
 export const siteConfig: SiteConfig = {
   name: "Taxonomy",
   description:
-    "An open source application built using the new router, server components and everything new in Next.js 13.",
+    "AI-powered investments with secure and seamless trading across multiple blockchain networks.",
   url: baseUrl,
   defaultTranche: "Silver",
   minClaimmableReward: 1,

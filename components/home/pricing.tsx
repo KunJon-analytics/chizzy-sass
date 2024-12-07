@@ -55,7 +55,7 @@ const pricingData: PricingCardProps[] = [
 
 const Pricing = () => {
   return (
-    <Section>
+    <Section id="tranches">
       <Container className="flex flex-col items-center gap-4 text-center">
         <h2 className="!my-0 text-3xl">Our Investment Plans</h2>
         <p className="text-lg opacity-70 md:text-2xl">
