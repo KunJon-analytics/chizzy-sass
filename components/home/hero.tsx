@@ -11,26 +11,28 @@ const Hero = () => {
     <Section className="relative backdrop-blur-sm py-2">
       <Container className="flex flex-col gap-8">
         <Badge className="w-fit" variant="outline">
-          <Link
-            className="group flex items-center gap-1"
-            href="https://9d8.dev"
-          >
-            Lorem ipsum dolor sit amet
+          <Link className="group flex items-center gap-1" href="/dashboard">
+            Invest Smart. Secure Your Future.
             <ArrowRight className="w-4 transition-all group-hover:-rotate-45" />
           </Link>
         </Badge>
         <h1 className="!mb-0 text-5xl">
-          What if building landing pages was as easy as copy and paste?
+          Secure Your Future with AI Agents & Smart Investments
         </h1>
         <h3 className="rounded-md border bg-muted/50 p-4 text-muted-foreground text-2xl">
-          Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Join the investment revolution with our AI-powered platform. Secure
+          your financial future with advanced trading across Solana, Ethereum,
+          and BSC networks. Don{"'"}t miss out on the opportunity to maximize
+          your returns.
         </h3>
 
         <div className="flex gap-4">
-          <Button>Get Started</Button>
-          <Button variant="outline">Learn More</Button>
+          <Button asChild>
+            <Link href={"/dashboard"}>Invest Now</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href={"/#how-it-works"}>Learn More</Link>
+          </Button>
         </div>
       </Container>
     </Section>
