@@ -23,25 +23,26 @@ type FAQItem = {
 
 const content: FAQItem[] = [
   {
-    question: "Lorem ipsum dolor sit amet?",
+    question: "How do I create and verify my account?",
+    link: "/register",
     answer:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    link: "https://google.com",
+      "To create and verify your account, sign up with your email address and follow the verification link sent to your inbox.",
   },
   {
-    question: "Ut enim ad minim veniam?",
+    question: "What cryptocurrencies can I invest with?",
     answer:
-      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "You can invest with cryptocurrencies from major blockchain networks, including Solana and EVM Chains.",
   },
   {
-    question: "Duis aute irure dolor in reprehenderit?",
+    question: "How can I withdraw my earnings?",
     answer:
-      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "You can withdraw your earnings at any time by navigating to the 'Investments' page on your dashboard and choosing the investment to withdraw from.",
+    link: "/dashboard/investments",
   },
   {
-    question: "Excepteur sint occaecat cupidatat non proident?",
+    question: "Is my investment secure?",
     answer:
-      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      "Yes, your investments are secured with advanced blockchain technology, ensuring full transparency and protection.",
   },
 ];
 
