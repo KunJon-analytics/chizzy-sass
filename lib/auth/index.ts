@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { nextCookies } from "better-auth/next-js";
 
+import { inngest } from "@/inngest/client";
 import prisma from "../prisma";
 import { sendForgotPasswordEmail, sendVerificationEmail } from "../emails";
 
@@ -35,6 +36,21 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true, // Automatically signIn the user after verification
     sendVerificationEmail: async ({ user, url }) => {
       await sendVerificationEmail(url, user.email);
+    },
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          // send user created event
+          await inngest.send({
+            name: "auth/user.created",
+            data: {
+              userId: user.id,
+            },
+          });
+        },
+      },
     },
   },
 });

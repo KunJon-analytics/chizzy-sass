@@ -16,6 +16,12 @@ type EndInvestment = {
   };
 };
 
+type UserCreated = {
+  data: {
+    userId: string;
+  };
+};
+
 type ClaimInvestmentReward = {
   data: {
     withdrawTxId: string;
@@ -34,6 +40,7 @@ type Events = {
   "investment/plan.end": EndInvestment;
   "notifications/telegram.send": TelegramEvent;
   "investment/plan.claim": ClaimInvestmentReward;
+  "auth/user.created": UserCreated;
 };
 
 // Create a client to send and receive events

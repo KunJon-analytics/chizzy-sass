@@ -6,8 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useQueryState } from "nuqs";
+import { parseAsString, useQueryState } from "nuqs";
 import { toast } from "sonner";
+import { UserPlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,22 +31,29 @@ import {
 } from "@/components/ui/form";
 import { signIn, signUp } from "@/lib/auth/client";
 import { LoadingAnimation } from "../loading-animation";
+import { Alert, AlertTitle } from "../ui/alert";
 
 type FormSchema = z.infer<typeof userAuthSchema>;
 
-export function UserAuthForm() {
+type UserAuthFormProps = {
+  referrer?: { id: string; name: string } | null;
+};
+
+export function UserAuthForm({ referrer: ref }: UserAuthFormProps) {
   const pathname = usePathname();
   const [isPending, startTransition] = React.useTransition();
-  const [ref] = useQueryState("ref");
+  const [callbackURL] = useQueryState(
+    "callbackURL",
+    parseAsString.withDefault("/dashboard")
+  );
   const router = useRouter();
 
   const isRegister = pathname === "/register";
   const buttonText = isRegister ? "Register" : "Login";
-  const callbackURL = "/dashboard";
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(userAuthSchema),
-    defaultValues: { referredById: ref ?? undefined },
+    defaultValues: { referredById: ref?.id ?? undefined },
   });
 
   function onSubmit(formData: FormSchema) {
@@ -68,6 +76,7 @@ export function UserAuthForm() {
             fetchOptions: {
               onSuccess: () => {
                 toast.success("Verification link has been sent to your mail");
+                router.push(`/verification-sent?email=${email}`);
               },
               onError({ error }) {
                 toast.error(error.message);
@@ -185,6 +194,13 @@ export function UserAuthForm() {
                   </FormItem>
                 )}
               />
+
+              {ref && (
+                <Alert className="mt-4">
+                  <UserPlus className="h-4 w-4" />
+                  <AlertTitle>You were invited by {ref.name}!</AlertTitle>
+                </Alert>
+              )}
 
               <Button disabled={isPending} type="submit" className="w-full">
                 {isPending ? <LoadingAnimation /> : <>{buttonText} </>}
