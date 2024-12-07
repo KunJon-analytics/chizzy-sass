@@ -46,6 +46,7 @@ import {
   Search,
   SearchCheck,
   Server,
+  Shield,
   Siren,
   Sparkles,
   SunMedium,
@@ -71,6 +72,7 @@ export type ValidIcon = keyof typeof Icons;
 export const Icons = {
   activity: Activity,
   "layout-dashboard": LayoutDashboard,
+  shield: Shield,
   link: Link,
   siren: Siren,
   "panel-top": PanelTop,

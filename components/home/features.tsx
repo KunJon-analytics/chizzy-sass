@@ -16,30 +16,31 @@ const features: {
   description: string;
 }[] = [
   {
-    icon: "gauge",
-    catchline: "Speed Test",
+    icon: "shield",
+    catchline: "Top-Notch Security",
     description:
-      "Enter your URL and get a website speed check. Get insights on page load, header details and timing phases (DNS, Connect, TLS, TTFB, Transfer) of the response.",
+      "Your investments are secured with advanced blockchain technology, ensuring full transparency and protection.",
   },
   {
-    icon: "globe",
-    catchline: "Global Latency",
+    icon: "bot",
+    catchline: "Autonomous AI Agents",
     description:
-      "Monitor performance in different regions to ensure quick load times for users across 35 regions around the world.",
+      "Benefit from our autonomous AI agents that trade onchain across major blockchain networks to maximize your returns.",
   },
   {
-    icon: "link",
-    catchline: "Share the Results",
+    icon: "clock",
+    catchline: "Flexible Withdrawals",
     description:
-      "Quickly share the results of your website speed test with your team or clients. The results expire after 7 days, so you can easily collaborate on performance.",
+      "Withdraw your stake and profits anytime, offering you complete control over your investments.",
   },
 ];
+
 const Feature = () => {
   return (
     <CardContainer>
       <CardHeader>
-        <CardIcon icon="activity" />
-        <CardTitle>Start monitoring your services</CardTitle>
+        <CardIcon icon="play" />
+        <CardTitle>Why Choose Us?</CardTitle>
       </CardHeader>
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
         {features?.map((feature, i) => (
@@ -49,10 +50,10 @@ const Feature = () => {
       </ul>
       <div className="order-first flex items-center justify-center gap-2 text-center md:order-none">
         <Button variant="outline" className="rounded-full" asChild>
-          <Link href="/features/status-page">Status Page</Link>
+          <Link href="/dashboard">Start earning</Link>
         </Button>
         <Button className="rounded-full" asChild>
-          <Link href="/features/monitoring">Monitoring</Link>
+          <Link href="/#faq">More Questions?</Link>
         </Button>
       </div>
     </CardContainer>
