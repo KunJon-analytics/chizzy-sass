@@ -8,6 +8,9 @@ import * as z from "zod";
 
 import { Icons } from "@/components/icons";
 import { LoadingAnimation } from "@/components/loading-animation";
+import { Tranche } from "@prisma/client";
+import { getInvestmentReward } from "@/lib/utils/investment";
+import { formatCurrency } from "@/lib/utils";
 import {
   Form,
   FormField,
@@ -34,9 +37,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { Tranche } from "@prisma/client";
-import { getInvestmentReward } from "@/lib/utils/investment";
-import { formatCurrency } from "@/lib/utils";
 
 const formSchema = z.object({
   amount: z.coerce.number().min(100),
@@ -229,7 +229,7 @@ function TableResult({
                 Profit
               </TableCell>
               <TableCell className="text-right">
-                ${formatCurrency(result.result)}
+                {formatCurrency(result.result)}
               </TableCell>
             </TableRow>
           </>
