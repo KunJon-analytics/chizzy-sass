@@ -30,9 +30,6 @@ export async function Investments() {
           </Avatar>
           <div>
             <h2 className="text-2xl font-bold">{session.user.name}</h2>
-            <p className="text-muted-foreground">
-              Total Investments: {investments.length}
-            </p>
           </div>
         </div>
       </div>
