@@ -26,6 +26,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { siteConfig } from "@/config/site";
+import { BrandName } from "@/components/layout/brand-name";
 
 const data = {
   navMain: [
@@ -96,17 +97,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {siteConfig.name}
-                  </span>
-                  <span className="truncate text-xs">Enterprise</span>
-                </div>
-              </Link>
+              <BrandName />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
