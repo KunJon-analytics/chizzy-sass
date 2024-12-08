@@ -11,6 +11,7 @@ const getUserInvestments = async (userId: string) => {
         tranche: { select: { name: true, fee: true } },
       },
       orderBy: { updatedAt: "desc" },
+      take: 4,
     });
   } catch (error) {
     console.log("GET_USER_INVESTMENTS", error);
