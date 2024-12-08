@@ -9,7 +9,7 @@ export default function InvestmentsPage() {
   return (
     <DashboardLayout
       appHeaderProps={{
-        primaryBreadcrumb: { link: "/dashboard", title: "Dashboard" },
+        primaryBreadcrumb: { link: "/dashboard/overview", title: "Dashboard" },
         secondaryBreadcrumb: "Investments",
       }}
     >

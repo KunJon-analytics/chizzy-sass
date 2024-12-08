@@ -12,7 +12,10 @@ export default function AccountLayout({
   return (
     <DashboardLayout
       appHeaderProps={{
-        primaryBreadcrumb: { link: "/dashboard/settings", title: "Settings" },
+        primaryBreadcrumb: {
+          link: "/dashboard/settings/account",
+          title: "Settings",
+        },
         secondaryBreadcrumb: "Account",
       }}
     >

@@ -27,17 +27,16 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { signOut, useSession } from "@/lib/auth/client";
-import { LoadingAnimation } from "@/components/loading-animation";
+import { signOut } from "@/lib/auth/client";
+import { Session } from "@/lib/auth";
 
-export function NavUser() {
+type NavUserProps = {
+  session: Session | null;
+};
+
+export function NavUser({ session: data }: NavUserProps) {
   const router = useRouter();
   const { isMobile } = useSidebar();
-  const {
-    data: session,
-    isPending, //loading state
-    error, //error object
-  } = useSession();
 
   const logOut = async () => {
     await signOut({
@@ -50,15 +49,11 @@ export function NavUser() {
     });
   };
 
-  if (isPending) {
-    return <LoadingAnimation />;
-  }
-
-  if (!session || !!error) {
+  if (!data) {
     return null;
   }
 
-  const { user } = session;
+  const session = data.user;
 
   return (
     <SidebarMenu>
@@ -71,16 +66,16 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={user.image || "/avatars/shadcn.jpeg"}
-                  alt={user.name}
+                  src={session.image || "/avatars/shadcn.jpeg"}
+                  alt={session.name}
                 />
                 <AvatarFallback className="rounded-lg">
-                  {user.name.substring(0, 2)}
+                  {session.name.substring(0, 2)}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-semibold">{session.name}</span>
+                <span className="truncate text-xs">{session.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -95,16 +90,16 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={user.image || "/avatars/shadcn.jpeg"}
-                    alt={user.name}
+                    src={session.image || "/avatars/shadcn.jpeg"}
+                    alt={session.name}
                   />
                   <AvatarFallback className="rounded-lg">
-                    {user.name.substring(0, 2)}
+                    {session.name.substring(0, 2)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-semibold">{session.name}</span>
+                  <span className="truncate text-xs">{session.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

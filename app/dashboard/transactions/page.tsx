@@ -25,7 +25,7 @@ const TransactionsPage = async () => {
   return (
     <DashboardLayout
       appHeaderProps={{
-        primaryBreadcrumb: { link: "/dashboard", title: "Dashboard" },
+        primaryBreadcrumb: { link: "/dashboard/overview", title: "Dashboard" },
         secondaryBreadcrumb: "Transactions",
       }}
     >

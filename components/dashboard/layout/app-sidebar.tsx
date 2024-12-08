@@ -4,14 +4,12 @@ import * as React from "react";
 import {
   ArrowRightLeft,
   Speech,
-  Command,
   LayoutDashboard,
   LifeBuoy,
   Settings2,
   Coins,
   Sprout,
 } from "lucide-react";
-import Link from "next/link";
 
 import { NavMain } from "@/components/dashboard/layout/nav-main";
 import { NavSecondary } from "@/components/dashboard/layout/nav-secondary";
@@ -25,14 +23,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { siteConfig } from "@/config/site";
 import { BrandName } from "@/components/layout/brand-name";
+import { Session } from "@/lib/auth";
 
 const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "/dashboard",
+      url: "/dashboard/overview",
       icon: LayoutDashboard,
       isActive: true,
       items: [
@@ -62,7 +60,7 @@ const data = {
     },
     {
       title: "Settings",
-      url: "/dashboard/settings",
+      url: "/dashboard/settings/account",
       icon: Settings2,
       items: [
         {
@@ -90,7 +88,11 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  session: Session | null;
+};
+
+export function AppSidebar({ session, ...props }: AppSidebarProps) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -107,7 +109,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser />
+        <NavUser session={session} />
       </SidebarFooter>
     </Sidebar>
   );
