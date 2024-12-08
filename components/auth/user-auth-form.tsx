@@ -44,7 +44,7 @@ export function UserAuthForm({ referrer: ref }: UserAuthFormProps) {
   const [isPending, startTransition] = React.useTransition();
   const [callbackURL] = useQueryState(
     "callbackURL",
-    parseAsString.withDefault("/dashboard")
+    parseAsString.withDefault("/dashboard/overview")
   );
   const router = useRouter();
 

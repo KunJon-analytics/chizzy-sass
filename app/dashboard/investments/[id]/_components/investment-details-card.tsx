@@ -104,7 +104,10 @@ const InvestmentDetailsCard = async ({
             <CancelPlanForm investmentId={showPaymentTx.investmentId} />
           </>
         )}
-        {!!investmentData.user?.evmwalletAddress && showEndButton ? (
+
+        {!investmentData.user?.evmwalletAddress ? (
+          <WalletUpdateModal />
+        ) : showEndButton ? (
           <>
             <EndPlanModal
               currentWalletAddress={investmentData.user.evmwalletAddress}
@@ -117,9 +120,7 @@ const InvestmentDetailsCard = async ({
               reward={unclaimedEarnings}
             />
           </>
-        ) : (
-          <WalletUpdateModal />
-        )}
+        ) : null}
       </CardFooter>
     </Card>
   );
