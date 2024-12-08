@@ -19,6 +19,7 @@ import { siteConfig } from "@/config/site";
 import CancelPlanForm from "./cancel-plan-form";
 import { EndPlanModal } from "./end-plan-form";
 import { ClaimRewardModal } from "./claim-reward-form";
+import WalletUpdateModal from "./wallet-update-modal";
 
 type InvestmentDetailsCardParams = { investmentData: InvestmentDetailPayload };
 
@@ -116,7 +117,9 @@ const InvestmentDetailsCard = async ({
               reward={unclaimedEarnings}
             />
           </>
-        ) : null}
+        ) : (
+          <WalletUpdateModal />
+        )}
       </CardFooter>
     </Card>
   );
